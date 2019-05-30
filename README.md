@@ -1,4 +1,5 @@
 # pichichos
+Pichichos es una webapp para registrar mascostas perdidas, avisar que encontraste una mascota y para adoptar mascotas
 
 ## Project setup
 ```
