@@ -12,6 +12,7 @@ import 'firebase/firestore'
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  //Initicalize the database for use
   const db = firebase.firestore();
   
   export default db;
