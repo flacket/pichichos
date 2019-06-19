@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  name: 'encontradas',
   data() {
     return {
       team: [
