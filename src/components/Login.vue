@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="600px">
+  <v-dialog max-width="600px" v-model="dialog">
 
     <v-btn flat slot="activator">
       <!--<v-icon class="mr-2">person</v-icon>-->
@@ -12,17 +12,15 @@
       <v-card-text>
         <v-form class="px-3" ref="form">
           <v-text-field v-model="email" label="Email" prepend-icon="email" 
-          :rules="[rules.required]"
           ></v-text-field>
           <v-text-field
             v-model="password" name="input-10-1" label="Contraseña" prepend-icon="vpn_key"
-            :rules="[rules.required, rules.min]"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'visibility' : 'visibility_off'"
             @click:append="show = !show"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <v-btn flat @click="submit" class="success mx-0 mt-3">Aceptar</v-btn>
+          <v-btn flat @click="login" class="success mx-0 mt-3">Aceptar</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -30,25 +28,28 @@
 </template>
 
 <script>
+import firebaseAuth from '@/database/FirebaseAuth'
 export default {
-data() {
+  data() {
     return {
-        email: '',
-        password: '',
-        show: false,
-        rules: {
-            required: value => !!value || 'Campo Obligatorio',
-            min: v => v.length >= 8 || 'Mínimo 8 Caracteres',
-            passMatch: () => ('El usuario y contraseña ingresados no coinciden')
-        }
+      email: '',
+      password: '',
+      show: false,
+      dialog: false
     }
-},
-methods: {
-    submit() {
-        if(this.$refs.form.validate()){
-            console.log(this.email, this.password)
-        }
+  },
+  methods: {
+  login() {
+    if(this.$refs.form.validate()){
+      firebaseAuth.signInWithEmailAndPassword(this.email,this.password).then(userCred => {
+      this.dialog = false;
+      alert(`Cuenta Logueada ${userCred.email}`);
+      },
+      err => {
+        alert(err.message);
+      });
     }
-}
+  }
+  }
 }
 </script>

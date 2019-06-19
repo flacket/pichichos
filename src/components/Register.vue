@@ -51,15 +51,14 @@ export default {
   methods: {
   submit() {
     if(this.$refs.form.validate()){
-      console.log('Entro a validar');
       firebaseAuth.createUserWithEmailAndPassword(this.email,this.password).then(userCred => {
-        //alert(`Cuenta creada para ${userCred.email}`);
-        console.log(userCred);
+        this.$router.push('/');
+        alert(`Cuenta creada para ${userCred.email}`);
+
       },
       err => {
         alert(err.message);
       });
-      console.log('Salio de validar');
     }
   }
   }

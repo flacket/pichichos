@@ -28,6 +28,7 @@
     <v-spacer></v-spacer>
     <Register/>
     <Login />
+    <v-btn flat v-on:click="logout">Cerrar Sesión</v-btn>
   </v-toolbar>
   </nav>
 </template>
@@ -35,24 +36,33 @@
 <script>
 import Login from './Login'
 import Register from './Register'
+import firebaseAuth from '@/database/FirebaseAuth'
 
 export default {
   components: { Login, Register },
   data(){
     return{
+      isLoggedIn: false,
+      currentUser: false,
       dialog: false,
-    drawer: null,
-    links: [
-      { icon: 'home', text: 'Inicio', route: '/' },
-      { icon: 'announcement', text: 'Perdidas', route: '/perdidas' },
-      { icon: 'loyalty', text: 'En Adopción', route: '/adopcion' },
-      { icon: 'settings', text: 'Configuración', route: '/configuracion' },
-      { icon: 'help', text: 'Acerca de', route: '/acerca' }
-    ]
+      drawer: null,
+      links: [
+        { icon: 'home', text: 'Inicio', route: '/' },
+        { icon: 'announcement', text: 'Encontradas', route: '/encontradas' },
+        { icon: 'settings', text: 'Configuración', route: '/configuracion' },
+        { icon: 'help', text: 'Acerca de', route: '/acerca' }
+      ]
     }
   },
   props: {
     source: String
-  } 
+  },
+  methods: {
+    logout: function() {
+      firebaseAuth.signOut().then(() => {
+        this.$router.push('/');
+      })
+    }
+  }
 }
 </script>
