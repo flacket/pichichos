@@ -26,9 +26,9 @@
       <span class="font-weight-light">ANALYTICS</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <Register/>
-    <Login />
-    <v-btn flat v-on:click="logout">Cerrar Sesión</v-btn>
+    <Register v-if="!isLoggedIn"/>
+    <Login v-if="!isLoggedIn" />
+    <v-btn v-if="isLoggedIn" flat v-on:click="logout">Cerrar Sesión</v-btn>
   </v-toolbar>
   </nav>
 </template>
@@ -57,10 +57,19 @@ export default {
   props: {
     source: String
   },
+  created() {
+    if (firebaseAuth().currentUser){
+      this.isLoggedIn = true;
+      this.currentUser = firebaseAuth.currentUser.email;
+    }
+  },
   methods: {
     logout: function() {
       firebaseAuth.signOut().then(() => {
-        this.$router.push('/');
+        //this.$router.push('/');
+        //uso el go en vez del push para que aparte de 
+        //redirigir me recargue la página.
+        this.$router.go({path: this.$router.path});
       })
     }
   }

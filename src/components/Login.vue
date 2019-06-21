@@ -42,7 +42,8 @@ export default {
   login() {
     if(this.$refs.form.validate()){
       firebaseAuth.signInWithEmailAndPassword(this.email,this.password).then(userCred => {
-      this.dialog = false;
+      //this.dialog = false;
+      this.$router.go({path: this.$router.path});
       alert(`Cuenta Logueada ${userCred.email}`);
       },
       err => {
