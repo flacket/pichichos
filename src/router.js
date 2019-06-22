@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import firebaseAuth from '@/database/FirebaseAuth'
-import d404 from './views/404.vue'
+import ErrorPage from './views/ErrorPage.vue'
 Vue.use(Router)
 
 let router = new Router({
@@ -18,9 +18,9 @@ let router = new Router({
       }
     },
     {
-      path: '/404',
-      name: '404',
-      component: d404,
+      path: '/error',
+      name: 'errorPage',
+      component: ErrorPage,
       meta:{
         requiresGuest: true
       }
@@ -66,7 +66,7 @@ router.beforeEach((to, from, next) => {
     if(!firebaseAuth.currentUser){
       //Go to login 
       next({
-        path: '/404',
+        path: '/error',
         query:{
           redirect: to.fullPath
         }

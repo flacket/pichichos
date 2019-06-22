@@ -69,7 +69,7 @@ export default {
         //this.$router.push('/');
         //uso el go en vez del push para que aparte de 
         //redirigir me recargue la página.
-        this.$router.go({path: this.$router.path});
+        this.$router.go({path: '/'});
       })
     }
   }

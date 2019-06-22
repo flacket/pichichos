@@ -1,10 +1,10 @@
 <template>
-  <div class="404">
+  <div>
     <h1>Usuario no logueado</h1>
   </div>
 </template>
 <script>
 export default {
-  name: '404',
+  name: 'errorPage',
 }
 </script>
