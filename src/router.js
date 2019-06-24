@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import firebaseAuth from '@/database/FirebaseAuth'
+
+import Home from './views/Home.vue'
 import ErrorPage from './views/ErrorPage.vue'
+
 Vue.use(Router)
 
 let router = new Router({
@@ -10,35 +12,27 @@ let router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '*',
+      redirect: '/'
+    },
+    {
       path: '/',
       name: 'home',
-      component: Home,
-      meta:{
-        requiresGuest: true
-      }
+      component: Home
     },
     {
       path: '/error',
       name: 'errorPage',
-      component: ErrorPage,
-      meta:{
-        requiresGuest: true
-      }
+      component: ErrorPage
     },
     {
       path: '/encontradas',
       name: 'encontradas',
-      component: () => import('./views/Encontradas.vue'),
-      meta:{
-        requiresAuth: true
-      }
+      component: () => import('./views/Encontradas.vue')
     },    
     {
       path: '/configuracion',
       name: 'configuracion',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('./views/Configuracion.vue'),
       meta:{
         requiresAuth: true
@@ -56,7 +50,7 @@ let router = new Router({
       }
     }
   ]
-})
+});
 
 //Nav Royal Guards
 router.beforeEach((to, from, next) => {
@@ -71,10 +65,7 @@ router.beforeEach((to, from, next) => {
           redirect: to.fullPath
         }
       });
-    } else {
-      //proceed to route
-      next();
-    }
+    } else next();
   } else if (to.matched.some(record => record.meta.requiresGuest)){
       //check if logged in
     if(firebaseAuth.currentUser){
@@ -85,13 +76,8 @@ router.beforeEach((to, from, next) => {
           redirect: to.fullPath
         }
       });
-    } else {
-      //proceed to route
-      next();
-    }
-  } else {
-    next();
-  }
+    } else next();
+  } else next();
 });
 
 export default router;

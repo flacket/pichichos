@@ -1,6 +1,5 @@
 <template>
   <v-dialog max-width="600px" v-model="dialog">
-
     <v-btn flat slot="activator">
       <!--<v-icon class="mr-2">person</v-icon>-->
       Iniciar Sesión
@@ -11,10 +10,12 @@
       </v-card-title>
       <v-card-text>
         <v-form class="px-3" ref="form">
-          <v-text-field v-model="email" label="Email" prepend-icon="email" 
-          ></v-text-field>
+          <v-text-field v-model="email" label="Email" prepend-icon="email"></v-text-field>
           <v-text-field
-            v-model="password" name="input-10-1" label="Contraseña" prepend-icon="vpn_key"
+            v-model="password"
+            name="input-10-1"
+            label="Contraseña"
+            prepend-icon="vpn_key"
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'visibility' : 'visibility_off'"
             @click:append="show = !show"
@@ -28,29 +29,30 @@
 </template>
 
 <script>
-import firebaseAuth from '@/database/FirebaseAuth'
+import firebaseAuth from "@/database/FirebaseAuth";
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       show: false,
       dialog: false
-    }
+    };
   },
   methods: {
-  login() {
-    if(this.$refs.form.validate()){
-      firebaseAuth.signInWithEmailAndPassword(this.email,this.password).then(userCred => {
-      //this.dialog = false;
-      this.$router.go({path: this.$router.path});
-      alert(`Cuenta Logueada ${userCred.email}`);
-      },
-      err => {
-        alert(err.message);
-      });
+    login: function() {
+      if (this.$refs.form.validate()) {
+        firebaseAuth.signInWithEmailAndPassword(this.email, this.password).then(
+          () => {
+            this.$router.go({ path: this.$router.path });
+            //this.$router.replace('/');
+          },
+          err => {
+            alert("Oops. " + err.message);
+          }
+        );
+      }
     }
   }
-  }
-}
+};
 </script>
