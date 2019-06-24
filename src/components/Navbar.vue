@@ -71,10 +71,10 @@ export default {
     logout: function() {
       firebaseAuth.signOut().then(() => {
         //this.$router.push('/');
+        //this.$router.replace('/')
         //uso el go en vez del push para que aparte de 
         //redirigir me recargue la página.
         //this.$router.go({path: '/'});
-        //this.$router.replace('/')
         this.$router.go({path: this.$router.path});
       })
     }

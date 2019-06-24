@@ -12,6 +12,10 @@ let router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '*',
+      redirect: '/'
+    },
+    {
       path: '/',
       name: 'home',
       component: Home
@@ -24,10 +28,7 @@ let router = new Router({
     {
       path: '/encontradas',
       name: 'encontradas',
-      component: () => import('./views/Encontradas.vue'),
-      meta:{
-        requiresAuth: true
-      }
+      component: () => import('./views/Encontradas.vue')
     },    
     {
       path: '/configuracion',
