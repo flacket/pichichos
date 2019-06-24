@@ -58,9 +58,13 @@ export default {
     source: String
   },
   created() {
-    if (firebaseAuth().currentUser){
+    if (firebaseAuth.currentUser){
+      console.log('usuario esta logueado');
       this.isLoggedIn = true;
       this.currentUser = firebaseAuth.currentUser.email;
+    } else {
+      this.isLoggedIn = false;
+      console.log('usuario no logueado');
     }
   },
   methods: {
@@ -69,7 +73,9 @@ export default {
         //this.$router.push('/');
         //uso el go en vez del push para que aparte de 
         //redirigir me recargue la página.
-        this.$router.go({path: '/'});
+        //this.$router.go({path: '/'});
+        //this.$router.replace('/')
+        this.$router.go({path: this.$router.path});
       })
     }
   }

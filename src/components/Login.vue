@@ -44,7 +44,8 @@ export default {
       firebaseAuth.signInWithEmailAndPassword(this.email,this.password).then(userCred => {
       //this.dialog = false;
       this.$router.go({path: this.$router.path});
-      alert(`Cuenta Logueada ${userCred.email}`);
+      //this.$router.replace('/');
+      //alert(`Cuenta Logueada ${userCred.email}`);
       },
       err => {
         alert(err.message);
