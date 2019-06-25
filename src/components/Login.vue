@@ -5,6 +5,7 @@
       Iniciar Sesión
     </v-btn>
     <v-card>
+      <v-progress-linear v-if="loading" color="primary" style="margin: 0" :indeterminate="true"></v-progress-linear>
       <v-card-title>
         <h2>Iniciar Sesión</h2>
       </v-card-title>
@@ -33,6 +34,7 @@ import firebaseAuth from "@/database/FirebaseAuth";
 export default {
   data() {
     return {
+      loading: false,
       email: "",
       password: "",
       show: false,
@@ -42,12 +44,14 @@ export default {
   methods: {
     login: function() {
       if (this.$refs.form.validate()) {
+        this.loading = true;
         firebaseAuth.signInWithEmailAndPassword(this.email, this.password).then(
           () => {
             this.$router.go({ path: this.$router.path });
             //this.$router.replace('/');
           },
           err => {
+            this.loading = false;
             alert("Oops. " + err.message);
           }
         );
