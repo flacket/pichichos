@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import firebaseAuth from "@/database/FirebaseAuth";
+import firebaseApp from "../FirebaseApp";
 
 export default {
   data() {
@@ -60,7 +60,7 @@ export default {
     signUp: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        firebaseAuth.auth()
+        firebaseApp.auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(
             () => {

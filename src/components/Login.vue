@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import firebaseAuth from "@/database/FirebaseAuth";
+import firebaseApp from "../FirebaseApp";
+
 export default {
   data() {
     return {
@@ -45,7 +46,7 @@ export default {
     login: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        firebaseAuth.auth().signInWithEmailAndPassword(this.email, this.password).then(
+        firebaseApp.auth().signInWithEmailAndPassword(this.email, this.password).then(
           () => {
             this.$router.go({ path: this.$router.path });
             //this.$router.replace('/');

@@ -36,7 +36,7 @@
 <script>
 import Login from './Login'
 import Register from './Register'
-import firebaseAuth from '@/database/FirebaseAuth'
+import firebaseApp from '../FirebaseApp'
 
 export default {
   components: { Login, Register },
@@ -58,10 +58,10 @@ export default {
     source: String
   },
   created() {
-    if (firebaseAuth.auth().currentUser){
+    if (firebaseApp.auth().currentUser){
       console.log('usuario esta logueado');
       this.isLoggedIn = true;
-      this.currentUser = firebaseAuth.auth().currentUser.email;
+      this.currentUser = firebaseApp.auth().currentUser.email;
     } else {
       this.isLoggedIn = false;
       console.log('usuario no logueado');
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     logout: function() {
-      firebaseAuth.auth().signOut().then(() => {
+      firebaseApp.auth().signOut().then(() => {
         //this.$router.push('/');
         //this.$router.replace('/')
         //uso el go en vez del push para que aparte de 

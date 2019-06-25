@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import firebaseAuth from '@/database/FirebaseAuth'
+import firebaseApp from "../FirebaseApp";
 
 export default {
   data() {
@@ -40,7 +40,7 @@ export default {
     //const docRef = firestore.doc("mascotasPerdidas")
 
 
-    firebaseAuth.firestore().collection('mascotasPerdidas').onSnapshot(res => {
+    firebaseApp.firestore().collection('mascotasPerdidas').onSnapshot(res => {
       const changes = res.docChanges();
 
       changes.forEach(change => {
