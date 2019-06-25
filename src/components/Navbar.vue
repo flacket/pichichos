@@ -48,7 +48,7 @@ export default {
       drawer: null,
       links: [
         { icon: 'home', text: 'Inicio', route: '/' },
-        { icon: 'announcement', text: 'Encontradas', route: '/encontradas' },
+        { icon: 'announcement', text: 'Mascotas Perdidas', route: '/perdidas' },
         { icon: 'settings', text: 'Configuración', route: '/configuracion' },
         { icon: 'help', text: 'Acerca de', route: '/acerca' }
       ]

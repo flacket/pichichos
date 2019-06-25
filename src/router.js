@@ -26,9 +26,9 @@ let router = new Router({
       component: ErrorPage
     },
     {
-      path: '/encontradas',
-      name: 'encontradas',
-      component: () => import('./views/Encontradas.vue')
+      path: '/perdidas',
+      name: 'perdidas',
+      component: () => import('./views/Perdidas.vue')
     },    
     {
       path: '/configuracion',
