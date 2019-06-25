@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import fire from '@/database/Firebase'
+import firebaseDb from '@/database/FirebaseDb'
 
 export default {
   data() {
@@ -40,7 +40,7 @@ export default {
     //const docRef = firestore.doc("mascotasPerdidas")
 
 
-    fire.firestore().collection('mascotasPerdidas').onSnapshot(res => {
+    firebaseDb.collection('mascotasPerdidas').onSnapshot(res => {
       const changes = res.docChanges();
 
       changes.forEach(change => {
