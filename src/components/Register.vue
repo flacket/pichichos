@@ -60,7 +60,7 @@ export default {
     signUp: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        firebaseAuth
+        firebaseAuth.auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(
             () => {

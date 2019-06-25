@@ -7,7 +7,7 @@ import firebaseAuth from '@/database/FirebaseAuth'
 Vue.config.productionTip = false
 
 let app = '';
-firebaseAuth.onAuthStateChanged(() => {
+firebaseAuth.auth().onAuthStateChanged(() => {
   if (!app) {
     /* eslint-disable no-new */
     app = new Vue({

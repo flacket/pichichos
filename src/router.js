@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
   //check for requireddAuth guard
   if(to.matched.some(record => record.meta.requiresAuth)) {
     //check if NOT logged in
-    if(!firebaseAuth.currentUser){
+    if(!firebaseAuth.auth().currentUser){
       //Go to login 
       next({
         path: '/error',
@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
     } else next();
   } else if (to.matched.some(record => record.meta.requiresGuest)){
       //check if logged in
-    if(firebaseAuth.currentUser){
+    if(firebaseAuth.auth().currentUser){
       //Go to login 
       next({
         path: '/',
