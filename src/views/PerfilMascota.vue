@@ -20,7 +20,7 @@
                 <span class="">Mandar Mensaje</span>
               </v-btn>
               <v-btn flat color="green">
-                <v-icon small left>message</v-icon>
+                <v-icon small left>share</v-icon>
                 <span class="">Compartir</span>
               </v-btn>
             </v-card-actions>
@@ -36,29 +36,22 @@ export default {
   data() {
     return {
       petId: '',
-      pet: []
+      pet: ''
     }
   },
   created() {
     this.petId = this.$route.params.pathMatch;
     
-    //const docRef = firestore.doc("mascotasPerdidas")
-    
-    /*firebaseApp.firestore().collection('mascotasPerdidas').onSnapshot(res => {
-      const changes = res.docChanges();
-
-      changes.forEach(change => {
-        if(change.type === 'added'){
-          this.mascotas.push({
-            ...change.doc.data(),
-            id: change.doc.id
-          })
-          //revisar si esta bien (change.doc.id  debe ser el id a eliminar)
-        }else if(change.type == 'removed'){
-          this.$delete(this.todos, change.doc.id)
-        }
-      })
-    })*/
+    var docRef = firebaseApp.firestore()
+    .collection('mascotasPerdidas').doc(this.petId)
+    docRef.get().then(doc => {
+      if (doc.exists)
+        this.pet = doc.data()
+      else 
+        console.log("No such document!");
+    }).catch(function(error) {
+      console.log("Oops! Error getting document:", error);
+    });
   }
 }
 </script>
