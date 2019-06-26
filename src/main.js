@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import firebaseApp from './FirebaseApp'
 
+//Vue.prototype.isLoggedIn = false
 Vue.config.productionTip = false
 
 let app = '';

@@ -48,6 +48,14 @@ let router = new Router({
       meta:{
         requiresAuth: true
       }
+    },
+    {
+      path: '/perfil/*',
+      name: 'perfil',
+      component: () => import('./views/PerfilMascota.vue'),
+      meta:{
+        requiresAuth: true
+      }
     }
   ]
 });
