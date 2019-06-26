@@ -64,9 +64,7 @@ export default {
   },
   methods: {
     goPerfil: function(id){
-      console.log('petIdKey:' + id)
       this.$router.push('/perfil/' + id);
-      //this.$router.replace('/')
     }
   }
 }

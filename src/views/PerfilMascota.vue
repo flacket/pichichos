@@ -9,10 +9,11 @@
               </v-avatar>
             </v-responsive>
             <v-card-text>
-              <div class="subheading-2">{{ pet.nombre }}</div>
+              <div class="subheading">{{ pet.nombre }}</div>
               <div class="grey--text">{{ pet.raza }}</div>
               <div class="grey--text">{{ pet.tipoAnimal }}</div>
               <div class="grey--text">{{ pet.ubicacion }}</div>
+              <div class="subheading">{{ pet.descripcion }}</div>
             </v-card-text>
             <v-card-actions>
               <v-btn flat color="primary">
