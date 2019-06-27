@@ -15,6 +15,9 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
+
+    <!--HACER BOTONES DE INICIAR SESION
+    Y QUE DESAPAREZCAN CUANDO LA PANTALLA SEA XS-->
   </v-navigation-drawer>
 
   <v-toolbar color="primary" dark fixed app
@@ -26,9 +29,10 @@
       <span class="font-weight-light">ANALYTICS</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <Register v-if="!isLoggedIn"/>
-    <Login v-if="!isLoggedIn" />
-    <v-btn v-if="isLoggedIn" flat v-on:click="logout">Cerrar Sesión</v-btn>
+    <Register v-if="!isLoggedIn" class="hidden-sm-and-down"/>
+    <Login v-if="!isLoggedIn" class="hidden-sm-and-down"/>
+    <v-btn v-if="isLoggedIn" flat v-on:click="logout" 
+    class="hidden-sm-and-down">Cerrar Sesión</v-btn>
   </v-toolbar>
   </nav>
 </template>
