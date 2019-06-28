@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 class="subheading grey--text">Mascotas Perdidas</h1>
+    <h1 class="display-1 primary--text font-weight-medium">Mascotas Perdidas</h1>
     <v-container class="my-5">
       <v-layout row wrap>
-        <v-flex xs12 sm6 md4 lg3 v-for="pet in mascotas" :key="pet.id">
-          <v-card flat class="text-xs-center ma-3">
+        <v-flex xs12 sm6 md4 v-for="pet in mascotas" :key="pet.id">
+          <v-card class="text-xs-center ma-3">
             <v-responsive class="pt-4">
               <v-avatar size="150" class="grey lighten-2">
                 <img :src="pet.imagen">
@@ -17,7 +17,7 @@
               <div class="grey--text">{{ pet.ubicacion }}</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn v-if="isLoggedIn" flat color="grey">
+              <v-btn v-if="isLoggedIn" flat color="primary">
                 <v-icon small left>message</v-icon>
                 <span flat @click="goPerfil(pet.id)">Ver Perfil</span>
               </v-btn>

@@ -14,5 +14,7 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+//habilitar si recibimos errores en la consola referido a esto
+//firebaseApp.firestore().settings({ timestampsInSnapshots: true})
 export default firebaseApp;

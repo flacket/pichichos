@@ -20,13 +20,13 @@
     Y QUE DESAPAREZCAN CUANDO LA PANTALLA SEA XS-->
   </v-navigation-drawer>
 
-  <v-toolbar color="primary" dark fixed app
+  <v-toolbar color="orange" dark fixed app
     :clipped-left="$vuetify.breakpoint.mdAndUp"
   >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title class="headline text-uppercase">
-      <span class="font-weight-bold">GITHUB</span>
-      <span class="font-weight-light">ANALYTICS</span>
+      <span class="font-weight-bold">PICHICHOS</span>
+      <span class="font-weight-light">app</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <Register v-if="!isLoggedIn" class="hidden-sm-and-down"/>

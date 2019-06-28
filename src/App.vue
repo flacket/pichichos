@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar/>
-    <v-content class="ma-4">
+    <v-content>
       <v-container fluid>
         <router-view></router-view>
       </v-container>
