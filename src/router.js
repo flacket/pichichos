@@ -37,6 +37,14 @@ let router = new Router({
       meta:{
         requiresAuth: true
       }
+    },
+    {
+      path: '/registrarMascota',
+      name: 'registrarMascota',
+      component: () => import('./views/RegistrarMascota.vue'),
+      meta:{
+        requiresAuth: true
+      }
     },   
     {
       path: '/acerca',

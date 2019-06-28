@@ -1,0 +1,27 @@
+nombre          string
+tipoAnimal      string{perro,gato}
+raza            string
+genero          bool(true: macho)
+
+//mi historia
+descripcion     string
+geoubicacion    geo{lat,long}
+imagen          string
+perdEnc         string{perdida,encontrada}
+ubicacion       string
+
+edad            string{cachorro,joven,adulto,anciano}
+
+tamaño(perro)   string{pequeño(11<kg),mediano(12-27kg),grande(28>kg)}
+pelo(gato)      string{corto,medio,largo}
+fechaPerdEnc   date
+fechaCreada  date{this.date()}
+
+checks (todos boolean)
+Esterilizado              esteril
+Vacunas al día            vacunas
+Entrenado para el hogar   train
+Raza pura                 razaPura
+Bueno con gatos           buenoGatos
+Bueno con perros          buenoPerros
+Bueno con Niños           buenoNinos

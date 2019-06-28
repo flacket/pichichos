@@ -109,7 +109,7 @@
             <v-card-actions>
               <v-btn flat color="primary">
                 <v-icon small left>assignment</v-icon>
-                <span flat @click.stop="dialog = true">Ir a Registrar</span>
+                <span flat @click="$router.push('registrarMascota')">Ir a Registrar</span>
               </v-btn>
             </v-card-actions>
           </v-card>
