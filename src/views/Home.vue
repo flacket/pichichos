@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--<v-parallax dark src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">-->
     <v-parallax
       style="margin-top: -24px; margin-left: -24px; margin-right: -24px;"
       dark
@@ -121,8 +120,6 @@
 </template>
 
 <script>
-//import HelloWorld from '../components/HelloWorld'
-
 export default {
   name: "home",
   data() {

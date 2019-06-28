@@ -20,10 +20,10 @@
             </v-flex>
             <v-flex xs12 sm4>
               <div class="caption grey--text">Estado:</div>
-              <v-chip small :class="`${pet.perdEnc} white--text caption`">{{ pet.perdEnc }}</v-chip>
+              <v-chip :key="pet.perdEnc" small :class="`${pet.perdEnc} white--text caption`">{{ pet.perdEnc }}</v-chip>
             </v-flex>
             <v-flex xs12 class="mb-2">
-              <div class="caption grey--text" >Ubicación:</div>
+              <div class="caption grey--text">Ubicación:</div>
               <div>{{ pet.ubicacion }}</div>
             </v-flex>
             <v-flex xs12 class="mb-4">
@@ -47,12 +47,12 @@
         </v-flex>
       </v-layout>
 
-
       <v-layout slot="header" wrap row class="mt-4" style="background: grey;">
         <v-flex xs12>
-          <iframe v-if="ready"
+          <iframe
+            v-if="ready"
             class="iframe"
-            v-bind:src="'http://maps.google.com/maps?q='
+            v-bind:src="'maps.google.com/maps?q='
             +pet.geoubicacion.latitude+','+pet.geoubicacion.longitude+
             '&z=15&output=embed'"
           ></iframe>
@@ -80,25 +80,12 @@ export default {
       .firestore()
       .collection("mascotasPerdidas")
       .doc(this.petId);
-    docRef
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          this.pet = doc.data();
-          this.ready = true;
-        } else console.log("No such document!");
-      })
-      .catch(function(error) {
-        console.log("Oops! Error getting document:", error);
-      });
-    /*this.component('async-geo', function (resolve, reject) {
-      setTimeout(function () {
-        // Pass the component definition to the resolve callback
-        resolve({
-          template: '<div>I am async!</div>'
-        })
-      }, 1000)
-    })*/
+    docRef.get().then(doc => {
+      if (doc.exists) {
+        this.pet = doc.data();
+        this.ready = true;
+      }
+    });
   }
 };
 </script>
