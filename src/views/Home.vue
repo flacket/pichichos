@@ -29,7 +29,7 @@
     <v-layout row wrap>
       <v-flex xs12 md4 class="pt-4 px-2">
         <v-hover>
-          <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600">
+          <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600" :class="`elevation-${hover ? 12 : 2}`"> 
             <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/cards/kitchen.png">
               <v-expand-transition>
                 <div
@@ -58,12 +58,8 @@
 
       <v-flex xs12 md4 class="pt-4 px-2">
         <v-hover>
-          <v-card
-            slot-scope="{ hover }"
-            color="grey lighten-4"
-            max-width="600"
-            :class="`elevation-${hover ? 12 : 2}`"
-          >
+          <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600"
+            :class="`elevation-${hover ? 12 : 2}`">
             <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/cards/kitchen.png">
               <v-expand-transition>
                 <div
@@ -93,7 +89,7 @@
 
       <v-flex xs12 md4 class="pt-4 px-2">
         <v-hover>
-          <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600">
+          <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600" :class="`elevation-${hover ? 12 : 2}`">
             <v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/cards/kitchen.png">
               <v-expand-transition>
                 <div

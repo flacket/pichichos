@@ -48,9 +48,9 @@
       </v-layout>
 
 
-      <v-layout slot="header" wrap row class="mt-4">
+      <v-layout slot="header" wrap row class="mt-4" style="background: grey;">
         <v-flex xs12>
-          <iframe
+          <iframe v-if="ready"
             class="iframe"
             v-bind:src="'http://maps.google.com/maps?q='
             +pet.geoubicacion.latitude+','+pet.geoubicacion.longitude+
@@ -68,6 +68,7 @@ import firebaseApp from "../FirebaseApp";
 export default {
   data() {
     return {
+      ready: false,
       petId: "",
       pet: ""
     };
@@ -82,8 +83,10 @@ export default {
     docRef
       .get()
       .then(doc => {
-        if (doc.exists) this.pet = doc.data();
-        else console.log("No such document!");
+        if (doc.exists) {
+          this.pet = doc.data();
+          this.ready = true;
+        } else console.log("No such document!");
       })
       .catch(function(error) {
         console.log("Oops! Error getting document:", error);
