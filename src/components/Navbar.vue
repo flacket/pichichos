@@ -3,6 +3,10 @@
   <v-navigation-drawer app fixed
       :clipped="$vuetify.breakpoint.mdAndUp"
       v-model="drawer">
+    <Register v-if="!isLoggedIn" class="hidden-md-and-up"/>
+    <Login v-if="!isLoggedIn" class="hidden-md-and-up"/>
+    <v-btn v-if="isLoggedIn" flat v-on:click="logout" 
+    class="hidden-md-and-up">Cerrar Sesión</v-btn>
     <v-list dense>
       <v-list-tile v-for="link in links" :key="link.text" router :to="link.route">
         <v-list-tile-action>
