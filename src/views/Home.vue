@@ -3,7 +3,7 @@
     <v-parallax
       style="margin-top: -24px; margin-left: -24px; margin-right: -24px;"
       dark
-      :src="foto2"
+      :src="foto3"
     >
       <v-layout align-center column justify-center>
         <h1 class="display-3 font-weight-regular mb-3">Pichichos</h1>
@@ -59,7 +59,7 @@
         <v-hover>
           <v-card slot-scope="{ hover }" class="mx-auto" color="grey lighten-4" max-width="600"
             :class="`elevation-${hover ? 12 : 2}`">
-            <v-img :aspect-ratio="16/9" src="http://www.catawbahumane.org/wp-content/uploads/2013/04/pet-owner-052112.jpg">
+            <v-img :aspect-ratio="16/9" src="https://i.pinimg.com/originals/6f/97/ef/6f97ef9fd5b6811f5febe3e4fa89df9f.jpg">
               <v-expand-transition>
                 <div
                   v-if="hover"
@@ -127,7 +127,9 @@ export default {
     return {
       dialog: false,
       foto1: 'https://live.staticflickr.com/7809/47574229121_a48bab4d73_h.jpg',
-      foto2: 'https://www.petcafe.com.au/wp-content/uploads/2019/01/pet-cafe-1920x1080.jpeg'
+      foto2: 'https://www.petcafe.com.au/wp-content/uploads/2019/01/pet-cafe-1920x1080.jpeg',
+      foto3: 'https://www.straight.com/files/v3/styles/gs_large/public/images/18/07/col_realestate_2635.jpg',
+      foto4: 'https://content.usaa.com/mcontent/static_assets/Media/pc-mainBnr-petInsurance.jpg',
     };
   }
 };
