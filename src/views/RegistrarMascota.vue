@@ -1,10 +1,15 @@
 <template>
   <v-form class="px-3" ref="form">
     <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+    <v-radio-group v-model="row" row>
+      <v-radio label="Perdi mi mascota" color="orange" value="perdida"></v-radio>
+      <v-radio label="Encontre una mascota" color="orange" value="encontrada"></v-radio>
+    </v-radio-group>
     <v-combobox v-model="sexo" :items="sexoItems" label="Sexo"></v-combobox>
     <v-combobox v-model="tipoAnimal" :items="tipoItems" label="Tipo de Mascota"></v-combobox>
     <!--<v-combobox v-model="raza" :items="razaItems" label="Raza"></v-combobox>-->
     <v-text-field  v-model="raza" label="Raza"></v-text-field>
+    <v-combobox v-model="edad" :items="edadItems" label="Tamaño"></v-combobox>
     <v-combobox v-model="tamano" :items="tamanoItems" label="Tamaño"></v-combobox>
     <v-textarea
           v-model="descripcion"
@@ -43,6 +48,13 @@ export default {
         'grande'
       ],
       tamano: 'pequeño',
+      edadItems: [
+        'cachorro',
+        'joven',
+        'adulto',
+        'anciano'
+      ],
+      edad: 'cachorro',
       descripcion: "",
       geo: {lat: -31.53914, lng: -68.567303}
     };
@@ -56,6 +68,7 @@ export default {
           tipoAnimal: this.tipoAnimal,
           raza: this.raza,
           tamano: this.tamano,
+          edad: this.edad,
           descripcion: this.descripcion,
           geoubicacion: new firebaseApp.firestore.GeoPoint(this.geo.lat, this.geo.lng),
         });

@@ -1,18 +1,19 @@
-nombre          string
-tipoAnimal      string{perro,gato}
-raza            string
-genero          bool(true: macho)
+-nombre          string
+-tipoAnimal      string{perro,gato}
+-raza            string (buscar lista de razas)
+-sexo          bool(true: macho)
 
 //mi historia
-descripcion     string
+-descripcion     string
+ubicacion       string
 geoubicacion    geo{lat,long}
 imagen          string
-perdEnc         string{perdida,encontrada}
-ubicacion       string
+-perdEnc         string{perdida,encontrada}
 
-edad            string{cachorro,joven,adulto,anciano}
 
-tamaño(perro)   string{pequeño(11<kg),mediano(12-27kg),grande(28>kg)}
+-edad            string{cachorro,joven,adulto,anciano}
+
+-tamaño(perro)   string{pequeño(11<kg),mediano(12-27kg),grande(28>kg)}
 pelo(gato)      string{corto,medio,largo}
 fechaPerdEnc   date
 fechaCreada  date{this.date()}
