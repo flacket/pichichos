@@ -128,29 +128,24 @@ export default {
             },
             function complete() {
               console.log("se completo la subida");
-              
-              /*snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                  console.log("File available at", downloadURL);
-                  this.imageUrl2 = downloadURL;
-              });*/
 
-              
-              firebaseApp.firestore().collection('mascotasPerdidas').doc(key)
-              .set({
-                imageUrl: task.url
-              }, { merge: true })
-              .then(() => {
-                this.$router.go({ path: '/' });
-                //this.$router.go({ path: this.$router.go(-1) });
-                //this.$router.replace('/');
-              },
-              err => {
-                this.loading = false;
-                alert("Oops. " + err.message);
+              task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                console.log('File available at', downloadURL);
+
+                firebaseApp.firestore().collection('mascotasPerdidas').doc(key)
+                .set({
+                  imagen: downloadURL
+                }, { merge: true })
+                .then(() => {
+                  alert('Mascota Registrada')
+                  this.$router.push('/');
+                  //this.$router.push({ path: this.$router.go(-1) });
+                },
+                err => {
+                  this.loading = false;
+                  alert("Oops. " + err.message);
+                });
               });
-              
-
-
             }
           ); //task.on
         });
