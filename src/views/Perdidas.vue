@@ -15,7 +15,7 @@
               <div class="grey--text">{{ pet.raza }}</div>
               <div class="grey--text">{{ pet.tipoAnimal }}</div>
               <div class="grey--text">{{ pet.ubicacion }}</div>
-              <div class="grey--text">{{ pet.fechaCreacion.toDate() | moment }}</div>
+              <div class="grey--text">{{ pet.fechaCreacion | moment }}</div>
             </v-card-text>
             <v-card-actions>
               <v-btn v-if="isLoggedIn" flat color="primary">
@@ -41,7 +41,6 @@ export default {
       isLoggedIn: false,
       petIdKey: '',
       mascotas: [],
-
     }
   },
   created() {
@@ -73,6 +72,7 @@ export default {
   },
   filters: {
   moment: function (date) {
+    //validar si es tipo fecha
     return moment(date).calendar();
   }
 }
