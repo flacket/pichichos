@@ -107,7 +107,7 @@ export default {
 
 
         //var fechaPerdidafb = this.fechaPerdida + 'T00:00:00.000Z';
-        let imageUrl
+        //let imageUrl
         let key
         firebaseApp.firestore().collection('mascotasPerdidas').add({
           nombre: this.nombre,
@@ -121,32 +121,48 @@ export default {
           descripcion: this.descripcion,
           fechaCreacion: new Date(),
           //geoubicacion: new firebaseApp.firestore.GeoPoint(this.geo.lat, this.geo.lng),
-        }).then(clave=> {
-          key = clave.id
-          return clave.id
-        }).then(doc => {
+        }).then(collKey => {
+          key = collKey.id
           const filename = this.image.name
           const ext = filename.slice(filename.lastIndexOf('.'))
+          var direccion = 'mascotasPerdidas/'+ key + ext
           //creo la url de almacenamiento
-          var storageRef = firebaseApp.storage().ref('mascotasPerdidas/'+ key + ext)
-          return storageRef.put(this.image)
-        }).then(fileData => {
-          console.log(fileData);
-          imageUrl = fileData.fullPath
-          return firebaseApp.firestore().collection('mascotasPerdidas').doc(key).set({imageUrl: imageUrl})
-        }).then(() => {
-          alert('se subio todo wachooo')
-        });
+          var storageRef = firebaseApp.storage().ref(direccion)
+          storageRef.put(this.image)
+          console.log('direccion: ',direccion);
+          return storageRef
+        }).then(direccion => {
+          console.log('storageref',direccion);
+          direccion.getDownloadURL().then((url) => {
+          console.log('getDownloadURL',url);
+          return firebaseApp.firestore().collection('mascotasPerdidas').doc(key).set({imageUrl: url})
+          }).catch(function(error) {
+          switch (error.code) {
+            case 'storage/object-not-found':
+              console.log('File doesnt exist');
+              break;
+
+            case 'storage/unauthorized':
+              console.log('User doesnt have permission to access the object');
+              break;
+
+            case 'storage/canceled':
+              console.log('User canceled the upload');
+              break;
+            case 'storage/unknown':
+              console.log('Unknown error occurred, inspect the server response');
+              break;
+          }
+          })
+          console.log('salio del url');
+          console.log('se subio todo wachooo')
         //TODO: Limpiar campos
         this.nombre = '';
         console.log('se creo el pichicho');
         //TODO: Redireccionar una vez guardado
         //this.$router.push('/perfil/' + id);
-      //}
+      })
     }
   }
 }
 </script>
-
-"https://firebasestorage.googleapis.com/v0/b/pichichos-app.appspot.com/o?name=mascotasPerdidas%2FpQmwwOXeQwt7EitvuQ57.JPG&upload_id=AEnB2UpHEjFXOnV_CSIUogLMFSUE2-3n-iNY_tcrkbizyP4wTP5VnNWBrHYL-kdG4Y263YaWp5MxS7Q4txKt4ox9j0sgpsnVdw&upload_protocol=resumable"
-"https://firebasestorage.googleapis.com/v0/b/pichichos-app.appspot.com/o?name=mascotasPerdidas%2FpQmwwOXeQwt7EitvuQ57.JPG&upload_id=AEnB2UpHEjFXOnV_CSIUogLMFSUE2-3n-iNY_tcrkbizyP4wTP5VnNWBrHYL-kdG4Y263YaWp5MxS7Q4txKt4ox9j0sgpsnVdw&upload_protocol=resumable"

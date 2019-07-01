@@ -25,6 +25,9 @@
       </v-card>
     </v-dialog>
 
+<p> {{ imageURL }} </p>
+<img :src="imageURL" height="200">
+
     <v-layout row wrap>
       <v-flex xs12 md4 class="pt-4 px-2">
         <v-hover>
@@ -121,16 +124,25 @@
 </template>
 
 <script>
+import firebaseApp from "../FirebaseApp";
+
 export default {
   name: "home",
   data() {
     return {
+      imageURL: '',
       dialog: false,
       foto1: 'https://live.staticflickr.com/7809/47574229121_a48bab4d73_h.jpg',
       foto2: 'https://www.petcafe.com.au/wp-content/uploads/2019/01/pet-cafe-1920x1080.jpeg',
       foto3: 'https://www.straight.com/files/v3/styles/gs_large/public/images/18/07/col_realestate_2635.jpg',
       foto4: 'https://content.usaa.com/mcontent/static_assets/Media/pc-mainBnr-petInsurance.jpg',
     }
+  },
+  created() {
+    firebaseApp.storage().ref(direccion).getDownloadURL().then(function(url) {
+    console.log(url);
+    return firebaseApp.firestore().collection('mascotasPerdidas').doc(key).set({imageUrl: url})
+    })
   }
 }
 </script>
