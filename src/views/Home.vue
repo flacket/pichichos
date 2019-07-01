@@ -130,9 +130,9 @@ export default {
       foto2: 'https://www.petcafe.com.au/wp-content/uploads/2019/01/pet-cafe-1920x1080.jpeg',
       foto3: 'https://www.straight.com/files/v3/styles/gs_large/public/images/18/07/col_realestate_2635.jpg',
       foto4: 'https://content.usaa.com/mcontent/static_assets/Media/pc-mainBnr-petInsurance.jpg',
-    };
+    }
   }
-};
+}
 </script>
 
 <style>

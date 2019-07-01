@@ -15,6 +15,7 @@
               <div class="grey--text">{{ pet.raza }}</div>
               <div class="grey--text">{{ pet.tipoAnimal }}</div>
               <div class="grey--text">{{ pet.ubicacion }}</div>
+              <div class="grey--text">{{ pet.fechaCreacion.toDate() | moment }}</div>
             </v-card-text>
             <v-card-actions>
               <v-btn v-if="isLoggedIn" flat color="primary">
@@ -31,13 +32,16 @@
 
 <script>
 import firebaseApp from "../FirebaseApp";
+import moment from 'moment';
+moment.locale('es-us');
 
 export default {
   data() {
     return {
       isLoggedIn: false,
       petIdKey: '',
-      mascotas: []
+      mascotas: [],
+
     }
   },
   created() {
@@ -66,6 +70,11 @@ export default {
     goPerfil: function(id){
       this.$router.push('/perfil/' + id);
     }
+  },
+  filters: {
+  moment: function (date) {
+    return moment(date).calendar();
   }
+}
 }
 </script>

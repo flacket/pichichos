@@ -14,11 +14,10 @@ imagen          string
 -edad            string{cachorro,joven,adulto,anciano}
 
 -tamaño(perro)   string{pequeño(11<kg),mediano(12-27kg),grande(28>kg)}
-pelo(gato)      string{corto,medio,largo}
-fechaPerdEnc   date
-fechaCreada  date{this.date()}
+-pelo(gato)      string{corto,medio,largo}
+-fechaRegistro   date.now()
 
-checks (todos boolean)
+checks SOLO PARA EL ADOPTAR (todos boolean)
 Esterilizado              esteril
 Vacunas al día            vacunas
 Entrenado para el hogar   train
