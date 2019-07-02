@@ -7,7 +7,6 @@
     </v-radio-group>
     <v-select v-model="sexo" :items="sexoItems" label="Sexo"></v-select>
     <v-select v-model="tipoAnimal" :items="tipoItems" v-on:change="cambiarRaza()" label="Tipo de Mascota"></v-select>
-    <!--<v-combobox v-model='raza' :items='razaItems' label='Raza'></v-combobox>-->
     <v-select v-model="raza" :items="razaItems" label="Raza" :disabled='razaDisabled'></v-select>
 
     <v-select v-model="edad" :items="edadItems" label="Edad"></v-select>
@@ -28,12 +27,14 @@
       accept="image/*"
       @change="selectedImage"
     />
-    <img :src="imageUrl" height="150" />
+    <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
 
-    <p>Por último, marca en el mapa donde perdiste tu mascota</p>
-    <!--<v-text-field v-model='imagen' label='Imagen'></v-text-field>-->
-    <v-btn @click="registrar">Registrar Mascota</v-btn>
+    <!--<p>Por último, marca en el mapa donde perdiste tu mascota</p>-->
+    
+    <p v-if="loading" class="mt-4">Registrando mascota, espera mientras le ponemos la correa..</p>
     <v-progress-linear v-if="loading" v-model="loadingProgress"></v-progress-linear>
+    <v-btn @click="registrar">Registrar Mascota</v-btn>
+    
   </v-form>
 </template>
 
@@ -123,6 +124,7 @@ export default {
     registrar: function() {
       this.loading = true;
       let key;
+      
       firebaseApp
         .firestore()
         .collection('mascotasPerdidas')
@@ -153,13 +155,14 @@ export default {
           var storageRef = firebaseApp.storage().ref(filePath);
           //guardo la imagen
           var task = storageRef.put(this.image);
+          var self = this;
           task.on(
             'state_changed',
             function progress(snapshot) {
               var percentage =
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 console.log('Porcentaje: ', percentage);
-              this.loadingProgress = percentage;
+              self.loadingProgress = percentage;
             },
             function error(err) {
               console.log('Oopps hubo un problema al subir la imagen: ', err.message);
@@ -176,11 +179,11 @@ export default {
                 }, { merge: true })
                 .then(() => {
                   alert('Mascota Registrada')
-                  this.$router.push('/');
+                  self.$router.push('/');
                   //this.$router.push({ path: this.$router.go(-1) });
                 },
                 err => {
-                  this.loading = false;
+                  self.loading = false;
                   alert('Oops. ' + err.message);
                 });
               });
