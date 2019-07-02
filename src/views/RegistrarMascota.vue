@@ -6,11 +6,13 @@
       <v-radio label="Encontre una mascota" color="orange" value="encontrada"></v-radio>
     </v-radio-group>
     <v-select v-model="sexo" :items="sexoItems" label="Sexo"></v-select>
-    <v-select v-model="tipoAnimal" :items="tipoItems" label="Tipo de Mascota"></v-select>
-    <!--<v-combobox v-model="raza" :items="razaItems" label="Raza"></v-combobox>-->
-    <v-text-field v-model="raza" label="Raza"></v-text-field>
-    <v-select v-model="edad" :items="edadItems" label="Tamaño"></v-select>
-    <v-select v-model="tamano" :items="tamanoItems" label="Tamaño"></v-select>
+    <v-select v-model="tipoAnimal" :items="tipoItems" v-on:change="cambiarRaza()" label="Tipo de Mascota"></v-select>
+    <!--<v-combobox v-model='raza' :items='razaItems' label='Raza'></v-combobox>-->
+    <v-select v-model="raza" :items="razaItems" label="Raza" :disabled='razaDisabled'></v-select>
+
+    <v-select v-model="edad" :items="edadItems" label="Edad"></v-select>
+    <v-select v-model="tamano" :items="tamanoItems" label="Tamaño"
+    :hint="tamanoHint" v-on:change="cambiartamanoHint()"></v-select>
     <v-select v-model="pelo" :items="peloItems" label="Pelo"></v-select>
     <v-textarea
       v-model="descripcion"
@@ -25,40 +27,57 @@
       ref="fileInput"
       accept="image/*"
       @change="selectedImage"
-    >
-    <img :src="imageUrl" height="150">
+    />
+    <img :src="imageUrl" height="150" />
 
     <p>Por último, marca en el mapa donde perdiste tu mascota</p>
-    <!--<v-text-field v-model="imagen" label="Imagen"></v-text-field>-->
+    <!--<v-text-field v-model='imagen' label='Imagen'></v-text-field>-->
     <v-btn @click="registrar">Registrar Mascota</v-btn>
     <v-progress-linear v-if="loading" v-model="loadingProgress"></v-progress-linear>
   </v-form>
 </template>
 
 <script>
-import firebaseApp from "../FirebaseApp";
-
+import firebaseApp from '../FirebaseApp';
 export default {
   data() {
     return {
       loading: false,
       loadingProgress: 0,
-      nombre: "",
-      perdEnc: "perdida",
-      sexoItems: ["macho", "hembra"],
-      sexo: "macho",
-      tipoItems: ["perro", "gato"],
-      tipoAnimal: "perro",
-      raza: "",
-      tamanoItems: ["pequeño", "mediano", "grande"],
-      tamano: "pequeño",
-      edadItems: ["cachorro", "joven", "adulto", "anciano"],
-      edad: "cachorro",
-      peloItems: ["corto", "medio", "largo"],
-      pelo: "corto",
-      descripcion: "",
-      imageUrl: "",
-      imageUrl2: "",
+
+      nombre: '',
+      perdEnc: 'perdida',
+      sexoItems: ['macho', 'hembra'],
+      sexo: '',
+      tipoItems: ['perro', 'gato'],
+      tipoAnimal: '',
+      razaItems: [''],
+      razaPerros: [
+        'Affenpinscher',
+        'Afgano',
+        'Akita japonés',
+        'Basenji'],
+      razaGatos: [
+        'Oriental de pelo largo',
+        'Selkirk rex',
+        'Abisinio',
+        'Americano de pelo duro',
+        'Asiático'],
+      raza: '',
+      razaDisabled: true,
+
+
+      tamanoItems: ['pequeño', 'mediano', 'grande'],
+      tamano: '',
+      tamanoHint: '',
+      edadItems: ['cachorro', 'joven', 'adulto', 'anciano'],
+      edad: '',
+      peloItems: ['corto', 'medio', 'largo'],
+      pelo: '',
+
+      descripcion: '',
+      imageUrl: '',
+      imageUrl2: '',
       image: null,
       geo: { lat: -31.53914, lng: -68.567303 }
     };
@@ -70,24 +89,41 @@ export default {
     selectedImage(e) {
       const files = e.target.files;
       let filename = files[0].name;
-      if (filename.lastIndexOf(".") <= 0) {
-        return alert("Por favor agrega un archivo valido!");
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Por favor agrega un archivo valido!');
       } else {
         const fileReader = new FileReader();
-        fileReader.addEventListener("load", () => {
+        fileReader.addEventListener('load', () => {
           this.imageUrl = fileReader.result;
         });
         fileReader.readAsDataURL(files[0]);
         this.image = files[0];
-        console.log("nombre de la imagen:", this.image.name);
+        console.log('nombre de la imagen:', this.image.name);
       }
+    },
+    cambiartamanoHint(){
+      if(this.tamano == '')
+        this.tamanoHint = 'debes seleccionar un tamaño'
+      else if (this.tamano == 'pequeño')
+        this.tamanoHint = 'menos de 11Kg'
+      else if (this.tamano == 'mediano')
+        this.tamanoHint = 'entre 11Kg y 27Kg'
+      else this.tamanoHint = 'más de 28Kg'
+    },
+    cambiarRaza(){
+      if (this.tipoAnimal == 'gato') {
+        this.razaItems = this.razaGatos;
+      } else {
+        this.razaItems = this.razaPerros;
+      }
+      this.razaDisabled = false;
     },
     registrar: function() {
       this.loading = true;
       let key;
       firebaseApp
         .firestore()
-        .collection("mascotasPerdidas")
+        .collection('mascotasPerdidas')
         .add({
           nombre: this.nombre,
           perdEnc: this.perdEnc,
@@ -107,26 +143,26 @@ export default {
           //armo el filePath del archivo local
           //con el id(key) del doc y la extension del archivo
           const extention = this.image.name.slice(
-            this.image.name.lastIndexOf(".")
+            this.image.name.lastIndexOf('.')
           );
-          var filePath = "mascotasPerdidas/" + key + extention;
+          var filePath = 'mascotasPerdidas/' + key + extention;
           //creo la referencia de donde se almacenara en GoogleStorage con el filePath
           var storageRef = firebaseApp.storage().ref(filePath);
           //guardo la imagen
           var task = storageRef.put(this.image);
           task.on(
-            "state_changed",
+            'state_changed',
             function progress(snapshot) {
               var percentage =
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Porcentaje: ", percentage);
+                console.log('Porcentaje: ', percentage);
               this.loadingProgress = percentage;
             },
             function error(err) {
-              console.log("Oopps hubo un problema al subir la imagen: ", err.message);
+              console.log('Oopps hubo un problema al subir la imagen: ', err.message);
             },
             function complete() {
-              console.log("se completo la subida");
+              console.log('se completo la subida');
 
               task.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 console.log('File available at', downloadURL);
@@ -142,7 +178,7 @@ export default {
                 },
                 err => {
                   this.loading = false;
-                  alert("Oops. " + err.message);
+                  alert('Oops. ' + err.message);
                 });
               });
             }
