@@ -28,7 +28,10 @@ let router = new Router({
     {
       path: '/perdidas',
       name: 'perdidas',
-      component: () => import('./views/Perdidas.vue')
+      component: () => import('./views/Perdidas.vue'),
+      meta:{
+        requiresAuth: true
+      }
     },    
     {
       path: '/configuracion',

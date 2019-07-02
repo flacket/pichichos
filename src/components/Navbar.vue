@@ -57,6 +57,7 @@ export default {
       links: [
         { icon: 'home', text: 'Inicio', route: '/' },
         { icon: 'announcement', text: 'Mascotas Perdidas', route: '/perdidas' },
+        { icon: 'assignment', text: 'Registrar Mascota', route: '/registrarMascota' },
         { icon: 'settings', text: 'Configuración', route: '/configuracion' },
         { icon: 'help', text: 'Acerca de', route: '/acerca' }
       ]

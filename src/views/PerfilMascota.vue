@@ -22,10 +22,10 @@
               <div class="caption grey--text">Estado:</div>
               <v-chip small :color="chipColor" class="white--text caption">{{ pet.perdEnc }}</v-chip>
             </v-flex>
-            <v-flex xs12 class="mb-2">
+            <!--<v-flex xs12 class="mb-2">
               <div class="caption grey--text">Ubicación:</div>
               <div>{{ pet.ubicacion }}</div>
-            </v-flex>
+            </v-flex>-->
             <v-flex xs12 class="mb-4">
               <div class="caption grey--text">Descripcion:</div>
               <div>{{ pet.descripcion }}</div>
