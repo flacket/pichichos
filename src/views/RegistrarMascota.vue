@@ -5,13 +5,13 @@
       <v-radio label="Perdi mi mascota" color="orange" value="perdida"></v-radio>
       <v-radio label="Encontre una mascota" color="orange" value="encontrada"></v-radio>
     </v-radio-group>
-    <v-combobox v-model="sexo" :items="sexoItems" label="Sexo"></v-combobox>
-    <v-combobox v-model="tipoAnimal" :items="tipoItems" label="Tipo de Mascota"></v-combobox>
+    <v-select v-model="sexo" :items="sexoItems" label="Sexo"></v-select>
+    <v-select v-model="tipoAnimal" :items="tipoItems" label="Tipo de Mascota"></v-select>
     <!--<v-combobox v-model="raza" :items="razaItems" label="Raza"></v-combobox>-->
     <v-text-field v-model="raza" label="Raza"></v-text-field>
-    <v-combobox v-model="edad" :items="edadItems" label="Tamaño"></v-combobox>
-    <v-combobox v-model="tamano" :items="tamanoItems" label="Tamaño"></v-combobox>
-    <v-combobox v-model="pelo" :items="peloItems" label="Pelo"></v-combobox>
+    <v-select v-model="edad" :items="edadItems" label="Tamaño"></v-select>
+    <v-select v-model="tamano" :items="tamanoItems" label="Tamaño"></v-select>
+    <v-select v-model="pelo" :items="peloItems" label="Pelo"></v-select>
     <v-textarea
       v-model="descripcion"
       label="Descripción"
@@ -27,7 +27,6 @@
       @change="selectedImage"
     >
     <img :src="imageUrl" height="150">
-    <img :src="imageUrl2" height="150">
 
     <p>Por último, marca en el mapa donde perdiste tu mascota</p>
     <!--<v-text-field v-model="imagen" label="Imagen"></v-text-field>-->
