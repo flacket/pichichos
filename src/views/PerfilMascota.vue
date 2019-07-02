@@ -20,7 +20,7 @@
             </v-flex>
             <v-flex xs12 sm4>
               <div class="caption grey--text">Estado:</div>
-              <v-chip :key="pet.perdEnc" small :class="`${pet.perdEnc} white--text caption`">{{ pet.perdEnc }}</v-chip>
+              <v-chip :disabled='!ready' small :class="`${pet.perdEnc} white--text caption`">{{ pet.perdEnc }}</v-chip>
             </v-flex>
             <v-flex xs12 class="mb-2">
               <div class="caption grey--text">Ubicación:</div>

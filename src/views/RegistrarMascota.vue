@@ -39,6 +39,10 @@
 
 <script>
 import firebaseApp from '../FirebaseApp';
+//TODO: borrar estos 2 import y ver como arreglar el puto geoPoint    
+import firebase from 'firebase/app';
+import 'firebase/firestore'
+
 export default {
   data() {
     return {
@@ -65,7 +69,6 @@ export default {
         'Asiático'],
       raza: '',
       razaDisabled: true,
-
 
       tamanoItems: ['pequeño', 'mediano', 'grande'],
       tamano: '',
@@ -98,7 +101,6 @@ export default {
         });
         fileReader.readAsDataURL(files[0]);
         this.image = files[0];
-        console.log('nombre de la imagen:', this.image.name);
       }
     },
     cambiartamanoHint(){
@@ -134,11 +136,12 @@ export default {
           pelo: this.pelo,
           edad: this.edad,
           descripcion: this.descripcion,
-          fechaCreacion: new Date()
-          //geoubicacion: new firebaseApp.firestore.GeoPoint(this.geo.lat, this.geo.lng),
+          fechaCreacion: new Date(),
+          geoubicacion: new firebase.firestore.GeoPoint(this.geo.lat, this.geo.lng)
         })
         .then(collKey => {
           //almaceno el id de la coleccion recien guardada
+          console.log('guardado en firebase');
           key = collKey.id;
           //armo el filePath del archivo local
           //con el id(key) del doc y la extension del archivo
