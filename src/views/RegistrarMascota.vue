@@ -120,18 +120,13 @@ export default {
             function progress(snapshot) {
               var percentage =
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Porcentaje: ", percentage);
               this.loadingProgress = percentage;
             },
             function error(err) {
               console.log("Oopps hubo un problema al subir la imagen: ", err.message);
             },
             function complete() {
-              console.log("se completo la subida");
-
               task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                console.log('File available at', downloadURL);
-
                 firebaseApp.firestore().collection('mascotasPerdidas').doc(key)
                 .set({
                   imagen: downloadURL

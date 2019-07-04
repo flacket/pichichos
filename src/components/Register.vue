@@ -11,6 +11,11 @@
           <!--<v-text-field v-model="user" label="Nombre de Usuario" prepend-icon="person" 
           :rules="[rules.required]"
           ></v-text-field>-->
+          <v-text-field 
+            v-model="nombre" 
+            label="Nombre" 
+            prepend-icon="face">
+          </v-text-field>
           <v-text-field
             v-model="email"
             label="Email"
@@ -45,9 +50,10 @@ export default {
   data() {
     return {
       loading: false,
-      email: "",
+      nombre: '',
+      email: '',
       //user: '',
-      password: "",
+      password: '',
       //password2: '',
       rules: {
         required: value => !!value || "Campo Obligatorio",
@@ -60,18 +66,38 @@ export default {
     signUp: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        firebaseApp.auth()
+        firebaseApp
+          .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
-          .then(
-            () => {
-              //this.$router.push("/");
-              this.$router.go({ path: this.$router.path });
-            },
-            err => {
-              this.loading = false;
-              alert("Oops. " + err.message);
-            }
-          );
+          .then(user => {
+            console.log(user);
+
+            var userId = firebaseApp.auth().currentUser.uid;
+            console.log('userid:',userId);
+            firebaseApp
+              .firestore()
+              .collection("usuarios")
+              .doc(userId)
+              .set({
+                  nombre: this.nombre
+              },{ merge: true })
+              .then(
+                () => {
+                  alert("Usuario Registrado");
+                  //this.$router.push("/");
+                  this.$router.go({ path: this.$router.path });
+                },
+                err => {
+                  this.loading = false;
+                  alert("Error al registrar usuario en la base de datos: " + err.message);
+                }
+              ),
+              err => {
+                this.loading = false;
+                alert(
+                  "Error al crear credenciales de autenticación: " + err.message);
+              };
+          });
       }
     }
   }

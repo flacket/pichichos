@@ -52,6 +52,7 @@ export default {
     return{
       isLoggedIn: false,
       currentUser: false,
+      userId: '',
       dialog: false,
       drawer: null,
       links: [
@@ -70,6 +71,8 @@ export default {
       console.log('usuario esta logueado');
       this.isLoggedIn = true;
       this.currentUser = firebaseApp.auth().currentUser.email;
+      this.userId = firebaseApp.auth().currentUser.uid;
+      console.log('userID:',this.userId);
     } else {
       this.isLoggedIn = false;
       console.log('usuario no logueado');
