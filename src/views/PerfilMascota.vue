@@ -5,7 +5,7 @@
       <v-layout slot="header" wrap row class="text-xs-center">
         <v-flex xs12 md6 lg4>
           <v-avatar size="250" class="grey lighten-2">
-            <img :src="pet.imagen">
+            <v-img :src="pet.imagen"></v-img>
           </v-avatar>
         </v-flex>
         <v-flex xs12 md6 lg8>
@@ -20,12 +20,12 @@
             </v-flex>
             <v-flex xs12 sm4>
               <div class="caption grey--text">Estado:</div>
-              <v-chip :key="pet.perdEnc" small :class="`${pet.perdEnc} white--text caption`">{{ pet.perdEnc }}</v-chip>
+              <v-chip small :color="chipColor" class="white--text caption">{{ pet.perdEnc }}</v-chip>
             </v-flex>
-            <v-flex xs12 class="mb-2">
+            <!--<v-flex xs12 class="mb-2">
               <div class="caption grey--text">Ubicación:</div>
               <div>{{ pet.ubicacion }}</div>
-            </v-flex>
+            </v-flex>-->
             <v-flex xs12 class="mb-4">
               <div class="caption grey--text">Descripcion:</div>
               <div>{{ pet.descripcion }}</div>
@@ -69,13 +69,13 @@ export default {
   data() {
     return {
       ready: false,
+      chipColor: 'grey',
       petId: "",
       pet: ""
     };
   },
   created() {
     this.petId = this.$route.params.pathMatch;
-
     var docRef = firebaseApp
       .firestore()
       .collection("mascotasPerdidas")
@@ -83,6 +83,11 @@ export default {
     docRef.get().then(doc => {
       if (doc.exists) {
         this.pet = doc.data();
+
+        if(this.pet.perdEnc == 'encontrada')
+          this.chipColor = 'green'
+        else this.chipColor = 'red'
+
         this.ready = true;
       }
     });

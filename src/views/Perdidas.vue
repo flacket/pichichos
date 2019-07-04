@@ -7,14 +7,13 @@
           <v-card class="text-xs-center ma-3">
             <v-responsive class="pt-4">
               <v-avatar size="150" class="grey lighten-2">
-                <img :src="pet.imagen">
+                <v-img :src="pet.imagen"></v-img>
               </v-avatar>
             </v-responsive>
             <v-card-text>
               <div class="subheading">{{ pet.nombre }}</div>
               <div class="grey--text">{{ pet.raza }}</div>
               <div class="grey--text">{{ pet.tipoAnimal }}</div>
-              <div class="grey--text">{{ pet.ubicacion }}</div>
               <div class="grey--text">{{ pet.fechaCreacion | moment }}</div>
             </v-card-text>
             <v-card-actions>
@@ -73,7 +72,7 @@ export default {
   filters: {
   moment: function (date) {
     //validar si es tipo fecha
-    return moment(date).calendar();
+    return moment(date.toDate()).calendar();
   }
 }
 }
