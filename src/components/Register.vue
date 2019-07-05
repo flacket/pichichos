@@ -79,7 +79,8 @@ export default {
               .collection("usuarios")
               .doc(userId)
               .set({
-                  nombre: this.nombre
+                  nombre: this.nombre,
+                  avatarUrl: ''
               },{ merge: true })
               .then(
                 () => {
