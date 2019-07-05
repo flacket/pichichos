@@ -143,7 +143,6 @@ export default {
         })
         .then(collKey => {
           //almaceno el id de la coleccion recien guardada
-          console.log('guardado en firebase');
           key = collKey.id;
           //armo el filePath del archivo local
           //con el id(key) del doc y la extension del archivo
@@ -160,16 +159,13 @@ export default {
             'state_changed',
             function progress(snapshot) {
               var percentage =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Porcentaje: ', percentage);
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
               self.loadingProgress = percentage;
             },
             function error(err) {
               console.log('Oopps hubo un problema al subir la imagen: ', err.message);
             },
             function complete() {
-              console.log('se completo la subida');
-
               task.snapshot.ref.getDownloadURL().then((downloadURL) => {
                 firebaseApp.firestore().collection('mascotasPerdidas').doc(key)
                 .set({

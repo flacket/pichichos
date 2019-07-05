@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="display-1 primary--text font-weight-medium">Mascotas Perdidas</h1>
-    <v-container class="my-5">
+    <v-container>
       <v-layout row wrap>
         <v-flex xs12 sm6 md4 v-for="pet in mascotas" :key="pet.id">
           <v-card class="text-xs-center ma-3">
