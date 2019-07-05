@@ -93,7 +93,7 @@ export default {
       user: {
         Id: '',
         nombre: '',
-        avatar: ''
+        avatar: 'https://api.adorable.io/avatars/150/flacket.png'
       },
       dialog: false,
       drawer: null,
@@ -106,9 +106,9 @@ export default {
         
       ],
       icons: [
+        'filter_vintage',
         'pets',
-        'pets',
-        'pets'
+        'wb_cloudy'
       ]
     }
   },
@@ -126,7 +126,8 @@ export default {
       .collection('usuarios').doc(this.user.Id)
       .get().then((user) =>{
         this.user.nombre = user.data().nombre
-        this.user.avatar = user.data().avatarUrl
+        if(user.data().avatarUrl != '')
+          this.user.avatar = user.data().avatarUrl
         console.log('Usuario Logueado: ',this.user)
       })
     } else {
