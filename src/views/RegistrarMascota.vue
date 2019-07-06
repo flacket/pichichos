@@ -78,10 +78,8 @@ export default {
       edad: '',
       peloItems: ['corto', 'medio', 'largo'],
       pelo: '',
-
       descripcion: '',
       imageUrl: '',
-      imageUrl2: '',
       image: null,
       geo: { lat: -31.53914, lng: -68.567303 }
     };

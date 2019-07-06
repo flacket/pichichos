@@ -30,6 +30,16 @@
             :rules="[rules.required, rules.min]"
             type="password"
           ></v-text-field>
+
+          <v-btn class="primary" @click="selectImage">Subir Imagen</v-btn>
+          <input
+            type="file"
+            style="display: none"
+            ref="fileInput"
+            accept="image/*"
+            @change="selectedImage"
+          />
+          <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
           <!--<v-text-field
             v-model="password2" name="input-10-1" label="Repite Contraseña"
             :rules="[rules.required, rules.min]"
@@ -55,6 +65,8 @@ export default {
       //user: '',
       password: '',
       //password2: '',
+      imageUrl: '',
+      image: null,
       rules: {
         required: value => !!value || "Campo Obligatorio",
         min: v => v.length >= 8 || "Mínimo 8 Caracteres",
@@ -63,30 +75,78 @@ export default {
     };
   },
   methods: {
+    selectImage() {
+      this.$refs.fileInput.click();
+    },
+    selectedImage(e) {
+      const files = e.target.files;
+      let filename = files[0].name;
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Por favor agrega un archivo valido!');
+      } else {
+        const fileReader = new FileReader();
+        fileReader.addEventListener('load', () => {
+          this.imageUrl = fileReader.result;
+        });
+        fileReader.readAsDataURL(files[0]);
+        this.image = files[0];
+      }
+    },
     signUp: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
         firebaseApp
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
-          .then(user => {
-            console.log(user);
-
-            var userId = firebaseApp.auth().currentUser.uid;
-            console.log('userid:',userId);
+          .then(data => {
+            let userId = data.user.uid;
             firebaseApp
               .firestore()
               .collection("usuarios")
               .doc(userId)
               .set({
-                  nombre: this.nombre,
-                  avatarUrl: ''
+                nombre: this.nombre,
+                avatarUrl: ''
               },{ merge: true })
-              .then(
-                () => {
-                  alert("Usuario Registrado");
-                  //this.$router.push("/");
-                  this.$router.go({ path: this.$router.path });
+              .then(() => {
+                const extention = this.image.name.slice(
+                  this.image.name.lastIndexOf('.')
+                );
+                var filePath = 'usuarios/' + userId + extention;
+                //creo la referencia de donde se almacenara en GoogleStorage con el filePath
+                var storageRef = firebaseApp.storage().ref(filePath);
+                //guardo la imagen
+                var task = storageRef.put(this.image);
+                var self = this;
+                task.on(
+                  'state_changed',
+                  function progress(snapshot) {
+                    var percentage =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    self.loadingProgress = percentage;
+                  },
+                  function error(err) {
+                    console.log('Oopps hubo un problema al subir la imagen: ', err.message);
+                  },
+                  function complete() {
+                    task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                      firebaseApp.firestore().collection('usuarios').doc(userId)
+                      .set({
+                        avatarUrl: downloadURL
+                      }, { merge: true })
+                      .then(() => {
+                        alert('Usuario Registrado')
+                        //self.$router.go({ path: self.$router.path });
+                        self.$router.go('/');
+                      },
+                      err => {
+                        self.loading = false;
+                        alert('Oops. ' + err.message);
+                      });
+                    });
+                  }
+                ); //task.on
+
                 },
                 err => {
                   this.loading = false;
