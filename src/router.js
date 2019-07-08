@@ -48,6 +48,14 @@ let router = new Router({
       meta:{
         requiresAuth: true
       }
+    },
+    {
+      path: '/adopta',
+      name: 'adopta',
+      component: () => import('./views/Adopta.vue'),
+      meta:{
+        requiresAuth: true
+      }
     },   
     {
       path: '/acerca',

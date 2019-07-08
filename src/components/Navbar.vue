@@ -81,12 +81,14 @@
 </template>
 
 <script>
-import Login from './Login'
-import Register from './Register'
 import firebaseApp from '../FirebaseApp'
 
 export default {
-  components: { Login, Register },
+  components: {
+    Login: () => import("./Login"),
+    Register: () => import("./Register")
+  },
+  
   data(){
     return{
       isLoggedIn: false,
