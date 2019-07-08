@@ -40,6 +40,7 @@
             @change="selectedImage"
           />
           <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
+          <p>{{filename}}</p>
           <!--<v-text-field
             v-model="password2" name="input-10-1" label="Repite Contraseña"
             :rules="[rules.required, rules.min]"
@@ -55,16 +56,19 @@
 
 <script>
 import firebaseApp from "../FirebaseApp";
+import { readAndCompressImage } from "browser-image-resizer";
 
 export default {
   data() {
     return {
       loading: false,
+      loadingProgress: 0,
       nombre: '',
       email: '',
       //user: '',
       password: '',
       //password2: '',
+      filename: '',
       imageUrl: '',
       image: null,
       rules: {
@@ -80,16 +84,27 @@ export default {
     },
     selectedImage(e) {
       const files = e.target.files;
-      let filename = files[0].name;
-      if (filename.lastIndexOf('.') <= 0) {
+      this.filename = files[0].name;
+
+      if (this.filename.lastIndexOf('.') <= 0) {
         return alert('Por favor agrega un archivo valido!');
       } else {
+        const config = {
+          quality: 0.9,
+          maxWidth: 500,
+          maxHeight: 500,
+          autoRotate: true
+        };
+        readAndCompressImage(files[0], config).then(resizedImage => {
+          // aca se guarda la imagen redimensionada
+          this.image = resizedImage;
+        });
         const fileReader = new FileReader();
-        fileReader.addEventListener('load', () => {
+        fileReader.addEventListener("load", () => {
+          //imagen en blob
           this.imageUrl = fileReader.result;
         });
         fileReader.readAsDataURL(files[0]);
-        this.image = files[0];
       }
     },
     signUp: function() {
@@ -109,10 +124,7 @@ export default {
                 avatarUrl: ''
               },{ merge: true })
               .then(() => {
-                const extention = this.image.name.slice(
-                  this.image.name.lastIndexOf('.')
-                );
-                var filePath = 'usuarios/' + userId + extention;
+                var filePath = 'usuarios/' + userId + this.filename.slice(this.filename.lastIndexOf('.'));
                 //creo la referencia de donde se almacenara en GoogleStorage con el filePath
                 var storageRef = firebaseApp.storage().ref(filePath);
                 //guardo la imagen

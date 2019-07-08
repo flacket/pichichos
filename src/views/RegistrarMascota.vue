@@ -28,7 +28,7 @@
       @change="selectedImage"
     />
     <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
-
+    <p>{{filename}}</p>
     <!--<p>Por último, marca en el mapa donde perdiste tu mascota</p>-->
     
     <p v-if="loading" class="mt-4">Registrando mascota, espera mientras le ponemos la correa..</p>
@@ -40,6 +40,8 @@
 
 <script>
 import firebaseApp from '../FirebaseApp';
+import { readAndCompressImage } from "browser-image-resizer";
+
 //TODO: borrar estos 2 import y ver como arreglar el puto geoPoint    
 import firebase from 'firebase/app';
 import 'firebase/firestore'
@@ -79,6 +81,7 @@ export default {
       peloItems: ['corto', 'medio', 'largo'],
       pelo: '',
       descripcion: '',
+      filename: '',
       imageUrl: '',
       image: null,
       geo: { lat: -31.53914, lng: -68.567303 }
@@ -90,16 +93,29 @@ export default {
     },
     selectedImage(e) {
       const files = e.target.files;
-      let filename = files[0].name;
-      if (filename.lastIndexOf('.') <= 0) {
-        return alert('Por favor agrega un archivo valido!');
+      this.filename = files[0].name;
+
+      if (this.filename.lastIndexOf(".") <= 0) {
+        return alert("Por favor agrega un archivo valido!");
       } else {
+        const config = {
+          quality: 0.9,
+          maxWidth: 500,
+          maxHeight: 500,
+          autoRotate: true
+        };
+        readAndCompressImage(files[0], config).then(resizedImage => {
+          // aca se guarda la imagen redimensionada
+          this.image = resizedImage;
+        });
         const fileReader = new FileReader();
-        fileReader.addEventListener('load', () => {
+        fileReader.addEventListener("load", () => {
+          //imagen en blob
           this.imageUrl = fileReader.result;
         });
         fileReader.readAsDataURL(files[0]);
-        this.image = files[0];
+        //info de la imagen
+        //this.image = files[0];
       }
     },
     cambiartamanoHint(){
@@ -142,12 +158,8 @@ export default {
         .then(collKey => {
           //almaceno el id de la coleccion recien guardada
           key = collKey.id;
-          //armo el filePath del archivo local
-          //con el id(key) del doc y la extension del archivo
-          const extention = this.image.name.slice(
-            this.image.name.lastIndexOf('.')
-          );
-          var filePath = 'mascotasPerdidas/' + key + extention;
+          //Filepath = Direccion de guardado + Id del usuario + extension del archivo (.jpg)
+          var filePath = "usuarios/" + key + this.filename.slice(this.filename.lastIndexOf('.'));
           //creo la referencia de donde se almacenara en GoogleStorage con el filePath
           var storageRef = firebaseApp.storage().ref(filePath);
           //guardo la imagen
