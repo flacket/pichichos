@@ -102,7 +102,7 @@ export default {
       links: [
         { icon: 'home', text: 'Inicio', route: '/' },
         { icon: 'search', text: 'Mascotas Perdidas', route: '/perdidas' },
-        { icon: 'loyalty', text: 'Adopta', route: '/adopta' },
+        { icon: 'loyalty', text: 'Adopta', route: '/perdidas' },
         { icon: 'assignment', text: 'Registrar Mascota', route: '/registrarMascota' },
         { icon: 'settings', text: 'Configuración', route: '/configuracion' }
         
