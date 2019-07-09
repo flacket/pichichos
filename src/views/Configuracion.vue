@@ -40,6 +40,7 @@ export default {
 
       user.updateProfile({
         displayName: this.nombre,
+        //TODO: agregar el modificar imagen
         //photoURL: "https://firebasestorage.googleapis.com/v0/b/pichichos-app.appspot.com/o/usuarios%2FFSLOZ0qMDVOPtKY0Ymg4LCUYqlg1.jpg?alt=media&token=7d16b422-ed00-4166-8258-1c2bcd847867"
       }).then(function() {
         alert("Se actualizaron los datos");
@@ -78,28 +79,6 @@ export default {
       }).catch(function(err) {
         alert('Ocurrio un error al intentar eliminar el usuario.', err);
       });
-      /*
-      var user = firebaseApp.auth().currentUser;
-      console.log('user: ', user);
-      // Borrar la foto
-      var desertRef = firebaseApp.storage().child('usuarios/'+ user.uid + '.jpg');
-      desertRef.delete().then(function() {
-        console.log('borrado archivo');
-        // Borrar la coleccion
-        firebaseApp.collection('usuarios').doc(user.uid).delete(); 
-        console.log('borrado coleccion');
-        // Borrar las claves
-        user.delete().then(function() {
-          alert('Se Borro el usuario');
-          this.$router.go({path: '/'});
-        }).catch(function(err) {
-          alert('Ocurrio un error al intentar eliminar el usuario (auth):', err);
-        }); 
-
-      }).catch(function(err) {
-        alert('Ocurrio un error al intentar eliminar el usuario (storage):', err);
-      });
-      */
     }
   }
 };
