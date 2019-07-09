@@ -11,11 +11,7 @@
           <!--<v-text-field v-model="user" label="Nombre de Usuario" prepend-icon="person" 
           :rules="[rules.required]"
           ></v-text-field>-->
-          <v-text-field 
-            v-model="nombre" 
-            label="Nombre" 
-            prepend-icon="face">
-          </v-text-field>
+          <v-text-field v-model="nombre" label="Nombre" prepend-icon="face"></v-text-field>
           <v-text-field
             v-model="email"
             label="Email"
@@ -86,7 +82,7 @@ export default {
       const files = e.target.files;
       this.filename = files[0].name;
 
-      if (this.filename.lastIndexOf('.') <= 0) {
+      if (this.filename.lastIndexOf(".") <= 0) {
         return alert('Por favor agrega un archivo valido!');
       } else {
         const config = {
@@ -100,7 +96,7 @@ export default {
           this.image = resizedImage;
         });
         const fileReader = new FileReader();
-        fileReader.addEventListener("load", () => {
+        fileReader.addEventListener('load', () => {
           //imagen en blob
           this.imageUrl = fileReader.result;
         });
@@ -108,6 +104,51 @@ export default {
       }
     },
     signUp: function() {
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        firebaseApp.auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(data => {
+          let user = data.user;
+          var filePath =
+            'usuarios/' +
+            user.uid +
+            this.filename.slice(this.filename.lastIndexOf('.'));
+          //creo la referencia de donde se almacenara en GoogleStorage con el filePath
+          var storageRef = firebaseApp.storage().ref(filePath);
+          //guardo la imagen
+          var task = storageRef.put(this.image);
+          var self = this;
+          task.on(
+            "state_changed",
+            function progress(snapshot) {
+              var percentage =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              self.loadingProgress = percentage;
+            },
+            function error(err) {
+              console.log('Oopps hubo un problema al subir la imagen: ',err.message);
+            },
+            function complete() {
+              console.log('displayName: ',self.nombre);
+              task.snapshot.ref.getDownloadURL().then(downloadURL => {
+                user.updateProfile({
+                  displayName: self.nombre,
+                  photoURL: downloadURL
+                }).then(function() {
+                  alert('Usuario registrado');
+                  self.$router.go("/");
+                }).catch(function(err) {
+                  self.loading = false;
+                  alert('Ocurrio un error al registrar usuario.',err);
+                });
+              });
+            }
+          ); //task.on
+        });
+      }
+    },
+    signOLD: function() {
       if (this.$refs.form.validate()) {
         this.loading = true;
         firebaseApp
@@ -119,56 +160,77 @@ export default {
               .firestore()
               .collection("usuarios")
               .doc(userId)
-              .set({
-                nombre: this.nombre,
-                avatarUrl: ''
-              },{ merge: true })
-              .then(() => {
-                var filePath = 'usuarios/' + userId + this.filename.slice(this.filename.lastIndexOf('.'));
-                //creo la referencia de donde se almacenara en GoogleStorage con el filePath
-                var storageRef = firebaseApp.storage().ref(filePath);
-                //guardo la imagen
-                var task = storageRef.put(this.image);
-                var self = this;
-                task.on(
-                  'state_changed',
-                  function progress(snapshot) {
-                    var percentage =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    self.loadingProgress = percentage;
-                  },
-                  function error(err) {
-                    console.log('Oopps hubo un problema al subir la imagen: ', err.message);
-                  },
-                  function complete() {
-                    task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                      firebaseApp.firestore().collection('usuarios').doc(userId)
-                      .set({
-                        avatarUrl: downloadURL
-                      }, { merge: true })
-                      .then(() => {
-                        alert('Usuario Registrado')
-                        //self.$router.go({ path: self.$router.path });
-                        self.$router.go('/');
-                      },
-                      err => {
-                        self.loading = false;
-                        alert('Oops. ' + err.message);
+              .set(
+                {
+                  nombre: this.nombre,
+                  avatarUrl: ""
+                },
+                { merge: true }
+              )
+              .then(
+                () => {
+                  var filePath =
+                    "usuarios/" +
+                    userId +
+                    this.filename.slice(this.filename.lastIndexOf("."));
+                  //creo la referencia de donde se almacenara en GoogleStorage con el filePath
+                  var storageRef = firebaseApp.storage().ref(filePath);
+                  //guardo la imagen
+                  var task = storageRef.put(this.image);
+                  var self = this;
+                  task.on(
+                    "state_changed",
+                    function progress(snapshot) {
+                      var percentage =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                      self.loadingProgress = percentage;
+                    },
+                    function error(err) {
+                      console.log(
+                        "Oopps hubo un problema al subir la imagen: ",
+                        err.message
+                      );
+                    },
+                    function complete() {
+                      task.snapshot.ref.getDownloadURL().then(downloadURL => {
+                        firebaseApp
+                          .firestore()
+                          .collection("usuarios")
+                          .doc(userId)
+                          .set(
+                            {
+                              avatarUrl: downloadURL
+                            },
+                            { merge: true }
+                          )
+                          .then(
+                            () => {
+                              alert("Usuario Registrado");
+                              //self.$router.go({ path: self.$router.path });
+                              self.$router.go("/");
+                            },
+                            err => {
+                              self.loading = false;
+                              alert("Oops. " + err.message);
+                            }
+                          );
                       });
-                    });
-                  }
-                ); //task.on
-
+                    }
+                  ); //task.on
                 },
                 err => {
                   this.loading = false;
-                  alert("Error al registrar usuario en la base de datos: " + err.message);
+                  alert(
+                    "Error al registrar usuario en la base de datos: " +
+                      err.message
+                  );
                 }
               ),
               err => {
                 this.loading = false;
                 alert(
-                  "Error al crear credenciales de autenticación: " + err.message);
+                  "Error al crear credenciales de autenticación: " + err.message
+                );
               };
           });
       }

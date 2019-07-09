@@ -1,22 +1,24 @@
 <template>
   <div class="configuracion">
     <h1 class="display-1 primary--text font-weight-medium">Configuración</h1>
+
     <v-text-field 
       v-model="nombre" 
       label="Nombre" 
-      prepend-icon="face">
-    </v-text-field>
-    
-    
+      prepend-icon="face"
+      ></v-text-field>
+      <v-btn flat @click="actualizarUsuario" class="success">Guardar Cambios</v-btn>
     <v-text-field
       v-model="password"
-      name="input-10-1"
-      label="Cambiar Contraseña"
+      label="Nueva Contraseña"
       prepend-icon="vpn_key"
       type="password"
+      class="mt-5"
     ></v-text-field>
-    <v-btn flat @click="cambiarPassword" class="success mx-0 mt-3">Guardar Cambios</v-btn>
-    <v-btn depressed color="error" @click="eliminarUsuario" class="mx-0 mt-3">Eliminar Cuenta</v-btn>
+    <v-btn flat @click="cambiarPassword" class="success">Cambiar Contraseña</v-btn>
+    <br>
+    <p class="subheading mb-1 mt-5">Eliminar Usuario (esto no tiene vuelta atras)</p>
+    <v-btn depressed color="error" @click="eliminarUsuario">Eliminar Cuenta</v-btn>
   </div>
 </template>
 
@@ -27,18 +29,21 @@ export default {
   data() {
     return {
       password: '',
-      nombre: ''
+      nombre: '',
+      alert: true
     };
   },
+  //TODO: hacer el create() y cargar los datos del usuario con los actuales
   methods: {
     actualizarUsuario: function() {
       var user = firebaseApp.auth().currentUser;
 
       user.updateProfile({
         displayName: this.nombre,
-        photoURL: "https://example.com/jane-q-user/profile.jpg"
+        //photoURL: "https://firebasestorage.googleapis.com/v0/b/pichichos-app.appspot.com/o/usuarios%2FFSLOZ0qMDVOPtKY0Ymg4LCUYqlg1.jpg?alt=media&token=7d16b422-ed00-4166-8258-1c2bcd847867"
       }).then(function() {
-        // Update successful.
+        alert("Se actualizaron los datos");
+        window.location.reload()
       }).catch(function(err) {
         alert("Ocurrio un error al actualizar datos de usuario.", err);
       });
@@ -48,7 +53,6 @@ export default {
       user
         .updatePassword(this.password)
         .then(function() {
-          // Update successful.
           alert("Se cambió la contraseña");
         })
         .catch(function(err) {
@@ -58,16 +62,22 @@ export default {
     },
     eliminarUsuario: function() {
       var user = firebaseApp.auth().currentUser;
-
-      user
-        .delete()
+      var self = this;
+      // Borrar la foto
+      //FIXME: archivos que no son .jpg (ej: JPEG, PNG, GIF) tira error.
+      //bucar como llamar la extension
+      var desertRef = firebaseApp.storage().ref().child('usuarios/'+ user.uid + '.jpg');
+      console.log('desertRef:', desertRef);
+      desertRef.delete().then(function() {
+        console.log('archivo borrado');
+        user.delete()
         .then(function() {
           alert("Se Borro el usuario");
-          this.$router.go({ path: "/" });
+          self.$router.go({ path: "/" });
         })
-        .catch(function(err) {
-          alert("Ocurrio un error al intentar eliminar el usuario.", err);
-        });
+      }).catch(function(err) {
+        alert('Ocurrio un error al intentar eliminar el usuario.', err);
+      });
       /*
       var user = firebaseApp.auth().currentUser;
       console.log('user: ', user);

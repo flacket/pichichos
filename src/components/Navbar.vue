@@ -68,9 +68,11 @@
   >
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title class="headline text-uppercase">
+      
       <span class="font-weight-bold">PICHICHOS</span>
-      <span class="font-weight-light">app</span>
-    </v-toolbar-title>
+      
+    </v-toolbar-title><v-divider class="mx-2" inset vertical></v-divider>
+      <span class="subheading font-weight-light">deja tu huella</span>
     <v-spacer></v-spacer>
     <Register v-if="!isLoggedIn" class="hidden-sm-and-down"/>
     <Login v-if="!isLoggedIn" class="hidden-sm-and-down"/>
@@ -95,6 +97,7 @@ export default {
       user: {
         Id: '',
         nombre: '',
+        email: '',
         avatar: 'https://api.adorable.io/avatars/150/flacket.png'
       },
       dialog: false,
@@ -118,23 +121,19 @@ export default {
     source: String
   },
   created() {
-    var currentUser = firebaseApp.auth().currentUser
-    if (currentUser){
+    var user = firebaseApp.auth().currentUser
+    if (user){
       this.isLoggedIn = true
-      this.user.Id = currentUser.uid
-
-      //Get User Data
-      firebaseApp.firestore()
-      .collection('usuarios').doc(this.user.Id)
-      .get().then((user) =>{
-        this.user.nombre = user.data().nombre
-        if(user.data().avatarUrl != '')
-          this.user.avatar = user.data().avatarUrl
-        console.log('Usuario Logueado: ',this.user)
-      })
+      this.user.nombre = user.displayName;
+      this.user.email = user.email;
+      this.user.avatar = user.photoURL;
+      //var emailVerified = user.emailVerified;
+      this.user.Id = user.uid;  
+      //TODO: The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
     } else {
       this.isLoggedIn = false;
-      console.log('usuario no logueado');
     }
   },
   methods: {
