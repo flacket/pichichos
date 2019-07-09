@@ -39,11 +39,10 @@
               </v-expand-transition>
             </v-img>
             <v-card-text class="pt-4" style="position: relative;">
-              <div class="font-weight-light grey--text title mb-2">Just random text</div>
               <h3 class="display-1 font-weight-light orange--text mb-2">Mascotas Perdidas</h3>
               <div
                 class="font-weight-light title mb-2"
-              >Doggo ipsum vvv big ol wow very biscit, snoot.</div>
+              >Busca en nuestro listado de mascotas perdidas y encontradas.</div>
             </v-card-text>
             <v-card-actions>
               <v-btn flat color="primary">
@@ -69,11 +68,10 @@
               </v-expand-transition>
             </v-img>
             <v-card-text class="pt-4" style="position: relative;">
-              <div class="font-weight-light grey--text title mb-2">Some more random for u</div>
               <h3 class="display-1 font-weight-light orange--text mb-2">Adopta</h3>
               <div class="font-weight-light title mb-2">
-                Puggo sub woofer waggy,
-                <br>the neighborhood pupper extremely cuuute
+                Quieres adoptar un perro o un gato?
+                <br>Acá encontrarás tu nuevo integrante de la familia.
               </div>
             </v-card-text>
             <v-card-actions>
@@ -99,11 +97,10 @@
               </v-expand-transition>
             </v-img>
             <v-card-text class="pt-4" style="position: relative;">
-              <div class="font-weight-light grey--text title mb-2">Random is life</div>
               <h3 class="display-1 font-weight-light orange--text mb-2">Registra una Mascota</h3>
               <div class="font-weight-light title mb-2">
-                Ruff fluffer floofs long woofer heckin good boys
-                <br>and girls tungg you shock.
+                Perdiste tu mascota o encontraste una en la calle?
+                <br>Registrala aquí para difundirlo.
               </div>
             </v-card-text>
             <v-card-actions>
