@@ -159,7 +159,7 @@ export default {
           //almaceno el id de la coleccion recien guardada
           key = collKey.id;
           //Filepath = Direccion de guardado + Id del usuario + extension del archivo (.jpg)
-          var filePath = "usuarios/" + key + this.filename.slice(this.filename.lastIndexOf('.'));
+          var filePath = "mascotasPerdidas/" + key + this.filename.slice(this.filename.lastIndexOf('.'));
           //creo la referencia de donde se almacenara en GoogleStorage con el filePath
           var storageRef = firebaseApp.storage().ref(filePath);
           //guardo la imagen
