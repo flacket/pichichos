@@ -6,20 +6,27 @@
         <v-flex xs12 sm6 md4 v-for="pet in mascotas" :key="pet.id">
           <v-card class="text-xs-center ma-3">
             <v-responsive class="pt-4">
-              <v-avatar size="150" class="grey lighten-2">
+              <v-avatar size="230" class="grey lighten-2">
                 <v-img :src="pet.imagen"></v-img>
               </v-avatar>
             </v-responsive>
             <v-card-text>
-              <div class="subheading">{{ pet.nombre }}</div>
-              <div class="grey--text">{{ pet.raza }}</div>
-              <div class="grey--text">{{ pet.tipoAnimal }}</div>
-              <div class="grey--text">{{ pet.fechaCreacion | moment }}</div>
+              <v-layout wrap mb-2>
+                <v-flex xs6>
+                  <div class="headline">{{ pet.nombre }}</div>
+                </v-flex>
+                <v-flex xs6>
+                  <v-chip small :color="chipColor" class="white--text caption">{{ pet.perdEnc }}</v-chip>
+                </v-flex>
+
+              </v-layout>
+              <div class="subheading">{{ pet.raza }}</div>
+              <div class="grey--text">{{ pet.fechaCreacion | moment }}</div> 
             </v-card-text>
             <v-card-actions>
               <v-btn v-if="isLoggedIn" flat color="primary">
                 <v-icon small left>message</v-icon>
-                <span flat @click="goPerfil(pet.id)">Ver Perfil</span>
+                <span @click="goPerfil(pet.id)">Ver Perfil</span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -40,6 +47,7 @@ export default {
       isLoggedIn: false,
       petIdKey: '',
       mascotas: [],
+      chipColor: 'grey',
     }
   },
   created() {
@@ -77,3 +85,11 @@ export default {
 }
 }
 </script>
+<style>
+.v-chip.encontrada {
+  background: #4caf50;
+}
+.v-chip.perdida {
+  background: #ef5350;
+}
+</style>

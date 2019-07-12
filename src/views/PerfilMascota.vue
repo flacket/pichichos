@@ -4,29 +4,39 @@
     <v-container class="my-5">
       <v-layout slot="header" wrap row class="text-xs-center">
         <v-flex xs12 md6 lg4>
+          <v-avatar size="260" :class='chipColor'>
           <v-avatar size="250" class="grey lighten-2">
-            <v-img :src="pet.imagen"></v-img>
+            <v-img  :src="pet.imagen"></v-img>
+          </v-avatar>
           </v-avatar>
         </v-flex>
         <v-flex xs12 md6 lg8>
           <v-layout slot="header" wrap row class="pr-2">
-            <v-flex xs12 sm4>
+            <v-flex xs6 sm4 mt-3>
               <div class="caption grey--text">Nombre:</div>
               <div>{{ pet.nombre }}</div>
             </v-flex>
-            <v-flex xs12 sm4>
+            <v-flex xs6 sm4 mt-3>
+              <div class="caption grey--text">Estado:</div>
+              <div>{{ pet.perdEnc }}</div>
+            </v-flex>
+            <v-flex xs6 sm4 mt-3>
+              <div class="caption grey--text">Tipo:</div>
+              <div>{{ pet.tipoAnimal }}</div>
+            </v-flex>
+            <v-flex xs6 sm6 mt-3>
+              <div class="caption grey--text">Tamaño:</div>
+              <div>{{ pet.tamano }}</div>
+            </v-flex>
+            <v-flex xs12 sm6 mt-3>
               <div class="caption grey--text">Raza:</div>
               <div>{{ pet.raza }}</div>
-            </v-flex>
-            <v-flex xs12 sm4>
-              <div class="caption grey--text">Estado:</div>
-              <v-chip small :color="chipColor" class="white--text caption">{{ pet.perdEnc }}</v-chip>
             </v-flex>
             <!--<v-flex xs12 class="mb-2">
               <div class="caption grey--text">Ubicación:</div>
               <div>{{ pet.ubicacion }}</div>
             </v-flex>-->
-            <v-flex xs12 class="mb-4">
+            <v-flex xs12 class="my-4">
               <div class="caption grey--text">Descripcion:</div>
               <div>{{ pet.descripcion }}</div>
             </v-flex>

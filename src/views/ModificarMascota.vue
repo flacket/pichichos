@@ -138,7 +138,7 @@ export default {
     registrar: function() {
       this.loading = true;
       let key;
-      var user = firebaseApp.auth().currentUser;
+      
       firebaseApp
         .firestore()
         .collection('mascotasPerdidas')
@@ -151,7 +151,6 @@ export default {
           tamano: this.tamano,
           pelo: this.pelo,
           edad: this.edad,
-          usuario: user.uid,
           descripcion: this.descripcion,
           fechaCreacion: new Date(),
           geoubicacion: new firebase.firestore.GeoPoint(this.geo.lat, this.geo.lng)
