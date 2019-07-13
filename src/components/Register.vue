@@ -110,6 +110,7 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(data => {
           let user = data.user;
+          
           var filePath =
             'usuarios/' +
             user.uid +
@@ -130,23 +131,33 @@ export default {
               console.log('Oopps hubo un problema al subir la imagen: ',err.message);
             },
             function complete() {
-              console.log('displayName: ',self.nombre);
               task.snapshot.ref.getDownloadURL().then(downloadURL => {
                 user.updateProfile({
                   displayName: self.nombre,
                   photoURL: downloadURL
                 }).then(function() {
+                  firebaseApp.firestore()
+                  .collection("usuarios")
+                  .doc(user.uid).set({
+                    nombre: self.nombre,
+                    avatarUrl: downloadURL
+                    },{ merge: true })
+                  .then(() => {
                   alert('Usuario registrado');
                   self.$router.go("/");
+                  }).catch(function(err) {
+                  self.loading = false;
+                  alert('Ocurrio un error al registrar usuario (collection).',err);
+                  })
                 }).catch(function(err) {
                   self.loading = false;
-                  alert('Ocurrio un error al registrar usuario.',err);
+                  alert('Ocurrio un error al registrar usuario(auth).',err);
                 });
               });
           }); //task.on
         });
       }
-    } //signup()
+    }, //signup()
   }
 };
 </script>

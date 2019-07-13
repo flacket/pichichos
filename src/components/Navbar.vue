@@ -123,6 +123,7 @@ export default {
   created() {
     var user = firebaseApp.auth().currentUser
     if (user){
+      console.log(user)
       this.isLoggedIn = true
       this.user.nombre = user.displayName;
       this.user.email = user.email;

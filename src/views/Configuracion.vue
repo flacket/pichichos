@@ -37,16 +37,25 @@ export default {
   methods: {
     actualizarUsuario: function() {
       var user = firebaseApp.auth().currentUser;
-
-      user.updateProfile({
+      console.log('se cargara el nombre: ', this.nombre)
+      console.log('al user: ', user.uid)
+      firebaseApp.firestore().collection("usuarios")
+      .doc(user.uid).update({
+        nombre: this.nombre
+      }).then(() => {
+        user.updateProfile({
         displayName: this.nombre,
         //TODO: agregar el modificar imagen
         //photoURL: "https://firebasestorage.googleapis.com/v0/b/pichichos-app.appspot.com/o/usuarios%2FFSLOZ0qMDVOPtKY0Ymg4LCUYqlg1.jpg?alt=media&token=7d16b422-ed00-4166-8258-1c2bcd847867"
-      }).then(function() {
-        alert("Se actualizaron los datos");
-        window.location.reload()
-      }).catch(function(err) {
-        alert("Ocurrio un error al actualizar datos de usuario.", err);
+        }).then(() => {
+          alert("Se actualizaron los datos");
+          window.location.reload()
+        }).catch(function(err) {
+          alert("Ocurrio un error al actualizar datos de usuario(auth): "+ err);
+        })
+      })
+      .catch(function(err) {
+        alert("Ocurrio un error al actualizar datos de usuario(collection): "+ err);
       });
     },
     cambiarPassword: function() {
@@ -58,7 +67,7 @@ export default {
         })
         .catch(function(err) {
           // An error happened.
-          alert("Ocurrio un error al intentar cambiar la contraseña", err);
+          alert("Ocurrio un error al intentar cambiar la contraseña: "+ err.message);
         });
     },
     eliminarUsuario: function() {
@@ -68,16 +77,16 @@ export default {
       //FIXME: archivos que no son .jpg (ej: JPEG, PNG, GIF) tira error.
       //bucar como llamar la extension
       var desertRef = firebaseApp.storage().ref().child('usuarios/'+ user.uid + '.jpg');
-      console.log('desertRef:', desertRef);
       desertRef.delete().then(function() {
-        console.log('archivo borrado');
-        user.delete()
-        .then(function() {
+        // Borrar la coleccion
+        firebaseApp.firestore().collection('usuarios').doc(user.uid).delete();
+        // Borrar las claves
+        user.delete().then(function() {
           alert("Se Borro el usuario");
-          self.$router.go({ path: "/" });
+          self.$router.go("/");
         })
       }).catch(function(err) {
-        alert('Ocurrio un error al intentar eliminar el usuario.', err);
+        alert('Ocurrio un error al intentar eliminar el usuario: '+ err);
       });
     }
   }
