@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-btn flat @click="$router.go(-1)" class="subheading grey--text">Volver</v-btn>
-    <v-container class="my-5">
+    
+    <v-container>
+      <v-btn flat @click="$router.go(-1)" class="subheading grey--text">Volver</v-btn>
       <v-layout slot="header" wrap row class="text-xs-center">
         <v-flex xs12 md6 lg4>
           <v-avatar size="260" :class='chipColor'>
@@ -69,7 +69,6 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </div>
 </template>
 
 <script>
