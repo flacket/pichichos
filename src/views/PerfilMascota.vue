@@ -62,7 +62,7 @@
           <iframe
             v-if="ready"
             class="iframe"
-            v-bind:src="'http://maps.google.com/maps?q='
+            v-bind:src="'https://maps.google.com/maps?q='
             +pet.geoubicacion.latitude+','+pet.geoubicacion.longitude+
             '&z=15&output=embed'"
           ></iframe>

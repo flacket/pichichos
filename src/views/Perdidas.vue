@@ -22,7 +22,7 @@
             <div class="grey--text">{{ pet.fechaCreacion | moment }}</div>
           </v-card-text>
           <v-card-actions>
-            <v-btn v-if="isLoggedIn" flat color="primary">
+            <v-btn flat color="primary">
               <v-icon small left>message</v-icon>
               <span @click="goPerfil(pet.id)">Ver Perfil</span>
             </v-btn>

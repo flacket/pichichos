@@ -1,84 +1,85 @@
 <template>
-  <v-container>
-    <v-form class="px-3" ref="form">
-      <v-subheader>Datos Basicos:</v-subheader>
-      <v-layout row wrap>
-        <v-flex xs12 md6 px-3>
-          <v-text-field v-model="nombre" label="Nombre"></v-text-field>
-          <v-radio-group v-model="perdEnc" row>
-            <v-radio label="Perdí mi mascota" color="orange" value="perdida"></v-radio>
-            <v-radio label="Encontré una mascota" color="orange" value="encontrada"></v-radio>
-          </v-radio-group>
-        </v-flex>
-        <v-flex xs12 md6 px-3 mb-5>
-          <v-select
-            v-model="tipoAnimal"
-            :items="tipoItems"
-            v-on:change="cambiarRaza()"
-            label="Tipo de Mascota"
-          ></v-select>
-          <v-select v-model="sexo" :items="sexoItems" label="Sexo"></v-select>
-        </v-flex>
-      </v-layout>
+<div>
+  <h1 class="display-1 primary--text font-weight-medium">Registrar Mascota</h1>
+  <v-form class="px-3" ref="form">
+    <v-subheader>Datos Basicos:</v-subheader>
+    <v-layout row wrap>
+      <v-flex xs12 md6 px-3>
+        <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+        <v-radio-group v-model="perdEnc" row>
+          <v-radio label="Perdí mi mascota" color="orange" value="perdida"></v-radio>
+          <v-radio label="Encontré una mascota" color="orange" value="encontrada"></v-radio>
+        </v-radio-group>
+      </v-flex>
+      <v-flex xs12 md6 px-3 mb-5>
+        <v-select
+          v-model="tipoAnimal"
+          :items="tipoItems"
+          v-on:change="cambiarRaza()"
+          label="Tipo de Mascota"
+        ></v-select>
+        <v-select v-model="sexo" :items="sexoItems" label="Sexo"></v-select>
+      </v-flex>
+    </v-layout>
 
-      <v-subheader>Apariencia:</v-subheader>
-      <v-layout row wrap>
-        <v-flex xs12 sm7 md8 lg9>
-          <v-layout row wrap>
-            <v-flex xs12 sm6 lg4 px-3>
-              <v-select v-model="raza" :items="razaItems" label="Raza" :disabled="razaDisabled"></v-select>
-            </v-flex>
-            <v-flex xs12 sm6 lg2 px-3> 
-              <v-select v-model="edad" :items="edadItems" label="Edad"></v-select>
-            </v-flex>
-            <v-flex xs12 sm6 lg3 px-3>
-              <v-select
-                v-model="tamano"
-                :items="tamanoItems"
-                label="Tamaño"
-                :hint="tamanoHint"
-                v-on:change="cambiartamanoHint()"
-              ></v-select>
-            </v-flex>
-            <v-flex xs12 sm6 lg3 px-3>
-              <v-select v-model="pelo" :items="peloItems" label="Pelo"></v-select>
-            </v-flex>
-            <v-flex xs12 px-3>
-              <v-textarea
-                v-model="descripcion"
-                label="Descripción"
-                value
-                hint="Describe como es tu mascota, que caracteristicas especiales tiene, etc."
-              ></v-textarea>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex xs12 sm5 md4 lg3 px-3>
-          <input
-            type="file"
-            style="display: none"
-            ref="fileInput"
-            accept="image/*"
-            @change="selectedImage"
-          />
-          <v-img
-            @click="selectImage"
-            class="imagen"
-            :src="imageUrl"
-            width="230"
-            height="230"
-          ></v-img>
-          <p>{{filename}}</p>
-          <v-btn small class="mt-0 primary" @click="selectImage">Subir Imagen</v-btn>
-        </v-flex>
-      </v-layout>
-      <!--<p>Por último, marca en el mapa donde perdiste tu mascota</p>-->
+    <v-subheader>Apariencia:</v-subheader>
+    <v-layout row wrap>
+      <v-flex xs12 sm7 md8 lg9>
+        <v-layout row wrap>
+          <v-flex xs12 sm6 lg4 px-3>
+            <v-select v-model="raza" :items="razaItems" label="Raza" :disabled="razaDisabled"></v-select>
+          </v-flex>
+          <v-flex xs12 sm6 lg2 px-3> 
+            <v-select v-model="edad" :items="edadItems" label="Edad"></v-select>
+          </v-flex>
+          <v-flex xs12 sm6 lg3 px-3>
+            <v-select
+              v-model="tamano"
+              :items="tamanoItems"
+              label="Tamaño"
+              :hint="tamanoHint"
+              v-on:change="cambiartamanoHint()"
+            ></v-select>
+          </v-flex>
+          <v-flex xs12 sm6 lg3 px-3>
+            <v-select v-model="pelo" :items="peloItems" label="Pelo"></v-select>
+          </v-flex>
+          <v-flex xs12 px-3>
+            <v-textarea
+              v-model="descripcion"
+              label="Descripción"
+              value
+              hint="Describe como es tu mascota, que caracteristicas especiales tiene, etc."
+            ></v-textarea>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs12 sm5 md4 lg3 px-3>
+        <input
+          type="file"
+          style="display: none"
+          ref="fileInput"
+          accept="image/*"
+          @change="selectedImage"
+        />
+        <v-img
+          @click="selectImage"
+          class="imagen"
+          :src="imageUrl"
+          width="230"
+          height="230"
+        ></v-img>
+        <p>{{filename}}</p>
+        <v-btn small class="mt-0 primary" @click="selectImage">Subir Imagen</v-btn>
+      </v-flex>
+    </v-layout>
+    <!--<p>Por último, marca en el mapa donde perdiste tu mascota</p>-->
 
-      <p v-if="loading" class="mt-4">Registrando mascota, espera mientras le ponemos la correa..</p>
-      <v-progress-linear v-if="loading" v-model="loadingProgress"></v-progress-linear>
-      <v-btn color="orange" class="white--text" @click="registrar">Registrar Mascota</v-btn>
-    </v-form>
-  </v-container>
+    <p v-if="loading" class="mt-4">Registrando mascota, espera mientras le ponemos la correa..</p>
+    <v-progress-linear v-if="loading" v-model="loadingProgress"></v-progress-linear>
+    <v-btn color="orange" class="white--text" @click="registrar">Registrar Mascota</v-btn>
+  </v-form>
+</div>
 </template>
 
 <script>
