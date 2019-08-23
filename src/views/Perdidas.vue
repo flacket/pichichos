@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <h1 class="display-1 primary--text font-weight-medium">Mascotas Perdidas</h1>
     <v-layout row wrap>
       <v-flex xs12 sm6 md4 v-for="pet in mascotas" :key="pet.id">
@@ -30,7 +30,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 
 <script>
