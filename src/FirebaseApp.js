@@ -1,18 +1,17 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import 'firebase/storage';
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/firestore';
+import 'firebase/compat/storage';
 
 //Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBTcIPxC5KhHivHqECbxKNL7PRdMmkKAv0",
-  authDomain: "pichichos-app.firebaseapp.com",
-  databaseURL: "https://pichichos-app.firebaseio.com",
-  projectId: "pichichos-app",
-  storageBucket: "pichichos-app.appspot.com",
-  messagingSenderId: "850217745951",
-  appId: "1:850217745951:web:01d737951896412f"
-}
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.VUE_APP_FIREBASE_PROJECT_ID + ".firebaseapp.com",
+  databaseURL:
+    "https://" + process.env.VUE_APP_FIREBASE_PROJECT_ID + ".firebaseio.com",
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FIREBASE_APP_ID
+};
 
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig)

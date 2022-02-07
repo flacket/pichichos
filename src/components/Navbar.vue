@@ -18,7 +18,7 @@
     <Register v-if="!isLoggedIn" small class="hidden-md-and-up"/>
     <Login v-if="!isLoggedIn" small class="hidden-md-and-up"/>
     
-    <v-list dense>
+    <v-list>
       <v-list-tile v-for="link in links" :key="link.text" router :to="link.route">
         <v-list-tile-action>
           <v-icon>{{ link.icon }}</v-icon>
@@ -105,10 +105,9 @@ export default {
       links: [
         { icon: 'home', text: 'Inicio', route: '/' },
         { icon: 'search', text: 'Mascotas Perdidas', route: '/perdidas' },
-        { icon: 'loyalty', text: 'Adopta', route: '/perdidas' },
+        { icon: 'loyalty', text: 'Adopta', route: '/adopta' },
         { icon: 'assignment', text: 'Registrar Mascota', route: '/registrarMascota' },
         { icon: 'settings', text: 'Configuración', route: '/configuracion' }
-        
       ],
       icons: [
         'filter_vintage',
@@ -123,7 +122,6 @@ export default {
   created() {
     var user = firebaseApp.auth().currentUser
     if (user){
-      console.log(user)
       this.isLoggedIn = true
       this.user.nombre = user.displayName;
       this.user.email = user.email;

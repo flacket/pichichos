@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import './plugins/vuetify'
-import App from './App.vue'
-import router from './router'
-import firebaseApp from './FirebaseApp'
+import Vue from 'vue';
+import './plugins/vuetify';
+import App from './App.vue';
+import router from './router';
+import firebaseApp from './FirebaseApp';
+import "firebase/compat/auth";
 
 //Vue.prototype.isLoggedIn = false
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 let app = '';
 firebaseApp.auth().onAuthStateChanged(() => {
