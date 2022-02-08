@@ -20,7 +20,7 @@
           <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat color="primary" @click="dialog = false">Aceptar</v-btn>
+          <v-btn text rounded color="primary" @click="dialog = false">Aceptar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -45,9 +45,9 @@
               >Busca en nuestro listado de mascotas perdidas y encontradas.</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn flat color="primary">
+              <v-btn text rounded color="primary">
                 <v-icon small left>search</v-icon>
-                <span flat @click="$router.push('perdidas')">Ir a Perdidas</span>
+                <span text rounded @click="$router.push('perdidas')">Ir a Perdidas</span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -75,9 +75,9 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn flat color="primary">
+              <v-btn text rounded color="primary">
                 <v-icon small left>loyalty</v-icon>
-                <span flat @click="dialog = true">Ir a Adoptar</span>
+                <span text rounded @click="dialog = true">Ir a Adoptar</span>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -104,9 +104,9 @@
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn flat color="primary">
+              <v-btn text rounded color="primary">
                 <v-icon small left>assignment</v-icon>
-                <span flat @click="$router.push('registrarMascota')">Ir a Registrar</span>
+                <span text rounded @click="$router.push('registrarMascota')">Ir a Registrar</span>
               </v-btn>
             </v-card-actions>
           </v-card>

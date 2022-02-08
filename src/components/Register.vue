@@ -1,52 +1,57 @@
 <template>
-  <v-dialog max-width="600px">
-    <v-btn flat slot="activator">Registrarse</v-btn>
-    <v-card>
-      <v-progress-linear v-if="loading" color="primary" style="margin: 0" :indeterminate="true"></v-progress-linear>
-      <v-card-title>
-        <h2>Registrarse</h2>
-      </v-card-title>
-      <v-card-text>
-        <v-form class="px-3" ref="form">
-          <!--<v-text-field v-model="user" label="Nombre de Usuario" prepend-icon="person" 
-          :rules="[rules.required]"
-          ></v-text-field>-->
-          <v-text-field v-model="nombre" label="Nombre" prepend-icon="face"></v-text-field>
-          <v-text-field
-            v-model="email"
-            label="Email"
-            prepend-icon="email"
-            :rules="[rules.required]"
-          ></v-text-field>
-          <v-text-field
-            v-model="password"
-            name="input-10-1"
-            label="Contraseña"
-            prepend-icon="vpn_key"
-            :rules="[rules.required, rules.min]"
-            type="password"
-          ></v-text-field>
+  <v-dialog max-width="600px" transition="dialog-top-transition">
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn text rounded v-bind="attrs" v-on="on">Registrarse</v-btn>
+    </template>
+        <v-card>
+          <v-progress-linear v-if="loading" color="primary" 
+          style="margin: 0" :indeterminate="true">
+          </v-progress-linear>
+          <v-card-title>
+            <h2>Registrarse</h2>
+          </v-card-title>
+          <v-card-text>
+            <v-form class="px-3" ref="form">
+              <!--<v-text-field v-model="user" label="Nombre de Usuario" prepend-icon="person" 
+              :rules="[rules.required]"
+              ></v-text-field>-->
+              <v-text-field v-model="nombre" label="Nombre" prepend-icon="face"></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email"
+                prepend-icon="email"
+                :rules="[rules.required]"
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                name="input-10-1"
+                label="Contraseña"
+                prepend-icon="vpn_key"
+                :rules="[rules.required, rules.min]"
+                type="password"
+              ></v-text-field>
 
-          <v-btn class="primary" @click="selectImage">Subir Imagen</v-btn>
-          <input
-            type="file"
-            style="display: none"
-            ref="fileInput"
-            accept="image/*"
-            @change="selectedImage"
-          />
-          <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
-          <p>{{filename}}</p>
-          <!--<v-text-field
-            v-model="password2" name="input-10-1" label="Repite Contraseña"
-            :rules="[rules.required, rules.min]"
-            type="password"
-          ></v-text-field>-->
-          <v-spacer></v-spacer>
-          <v-btn flat @click="signUp" class="success mx-0 mt-3">Aceptar</v-btn>
-        </v-form>
-      </v-card-text>
-    </v-card>
+              <v-btn class="primary" rounded @click="selectImage">Subir Imagen</v-btn>
+              <input
+                type="file"
+                style="display: none"
+                ref="fileInput"
+                accept="image/*"
+                @change="selectedImage"
+              />
+              <v-img style="background: grey" :src="imageUrl" width="150" height="150"></v-img>
+              <p>{{filename}}</p>
+              <!--<v-text-field
+                v-model="password2" name="input-10-1" label="Repite Contraseña"
+                :rules="[rules.required, rules.min]"
+                type="password"
+              ></v-text-field>-->
+              <v-spacer></v-spacer>
+              <v-btn text rounded @click="signUp" class="success mx-0 mt-3">Aceptar</v-btn>
+            </v-form>
+          </v-card-text>
+        </v-card>
+    
   </v-dialog>
 </template>
 

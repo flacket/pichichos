@@ -1,5 +1,5 @@
 <template>
-  <div class="configuracion">
+  <div class="configuracion" >
     <h1 class="display-1 primary--text font-weight-medium">Configuración</h1>
 
     <v-text-field 
@@ -7,7 +7,7 @@
       label="Nombre" 
       prepend-icon="face"
       ></v-text-field>
-      <v-btn flat @click="actualizarUsuario" class="success">Guardar Cambios</v-btn>
+      <v-btn text rounded @click="actualizarUsuario" class="success">Guardar Cambios</v-btn>
     <v-text-field
       v-model="password"
       label="Nueva Contraseña"
@@ -15,10 +15,10 @@
       type="password"
       class="mt-5"
     ></v-text-field>
-    <v-btn flat @click="cambiarPassword" class="success">Cambiar Contraseña</v-btn>
+    <v-btn text rounded @click="cambiarPassword" class="success">Cambiar Contraseña</v-btn>
     <br>
     <p class="subheading mb-1 mt-5">Eliminar Usuario (esto no tiene vuelta atras)</p>
-    <v-btn depressed color="error" @click="eliminarUsuario">Eliminar Cuenta</v-btn>
+    <v-btn rounded depressed color="error" @click="eliminarUsuario">Eliminar Cuenta</v-btn>
   </div>
 </template>
 

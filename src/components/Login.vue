@@ -1,9 +1,11 @@
 <template>
-  <v-dialog max-width="600px" v-model="dialog">
-    <v-btn flat slot="activator">
+  <v-dialog max-width="600px" transition="dialog-top-transition">
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn text rounded v-bind="attrs" v-on="on">
       <!--<v-icon class="mr-2">person</v-icon>-->
       Iniciar Sesión
     </v-btn>
+    </template>
     <v-card>
       <v-progress-linear v-if="loading" color="primary" style="margin: 0" :indeterminate="true"></v-progress-linear>
       <v-card-title>
@@ -22,7 +24,7 @@
             @click:append="show = !show"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <v-btn flat @click="login" class="success mx-0 mt-3">Aceptar</v-btn>
+          <v-btn text rounded @click="login" class="success mx-0 mt-3">Aceptar</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
