@@ -1,8 +1,8 @@
 <template>
     
     <v-container>
-      <v-btn flat @click="$router.go(-1)" class="subheading grey--text">Volver</v-btn>
-      <v-layout slot="header" wrap row class="text-xs-center">
+      <v-btn text rounded @click="$router.go(-1)" class="subheading grey--text">Volver</v-btn>
+      <v-layout slot="header" wrap row class="text-center">
         <v-flex xs12 md6 lg4>
           <v-avatar size="260" :class='chipColor'>
           <v-avatar size="250" class="grey lighten-2">
@@ -42,13 +42,13 @@
             </v-flex>
 
             <v-flex xs12 sm6>
-              <v-btn flat color="primary">
+              <v-btn text rounded color="primary">
                 <v-icon small left>message</v-icon>
                 <span class>Mandar Mensaje</span>
               </v-btn>
             </v-flex>
             <v-flex xs12 sm6>
-              <v-btn flat color="green">
+              <v-btn text rounded color="green">
                 <v-icon small left>share</v-icon>
                 <span class>Compartir</span>
               </v-btn>

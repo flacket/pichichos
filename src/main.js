@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import './plugins/vuetify';
+import vuetify from './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import firebaseApp from './FirebaseApp';
@@ -13,6 +13,7 @@ firebaseApp.auth().onAuthStateChanged(() => {
   if (!app) {
     /* eslint-disable no-new */
     app = new Vue({
+      vuetify,
       router,
       render: h => h(App)
     }).$mount('#app')
