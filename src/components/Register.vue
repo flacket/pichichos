@@ -133,7 +133,7 @@ export default {
               self.loadingProgress = percentage;
             },
             function error(err) {
-              console.log('Oopps hubo un problema al subir la imagen: ',err.message);
+              alert('Oopps hubo un problema al subir la imagen: ',err.message);
             },
             function complete() {
               task.snapshot.ref.getDownloadURL().then(downloadURL => {

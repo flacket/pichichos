@@ -251,14 +251,8 @@ export default {
     };
   },
   create() {
-    console.log("entra al create");
-    if (this.input == "gato") {
-      console.log("entra al gato");
-      this.razaItems = this.razaGatos;
-    } else {
-      console.log("entra al perro");
-      this.razaItems = this.razaPerros;
-    }
+    if (this.input == "gato") this.razaItems = this.razaGatos;
+      else this.razaItems = this.razaPerros;
   },
   props: {
     input: String,

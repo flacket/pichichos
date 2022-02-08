@@ -37,8 +37,6 @@ export default {
   methods: {
     actualizarUsuario: function() {
       var user = firebaseApp.auth().currentUser;
-      console.log('se cargara el nombre: ', this.nombre)
-      console.log('al user: ', user.uid)
       firebaseApp.firestore().collection("usuarios")
       .doc(user.uid).update({
         nombre: this.nombre

@@ -49,7 +49,7 @@
 
     </v-navigation-drawer>
 
-    <v-app-bar app darkcolor="orange" 
+    <v-app-bar app dark color="orange" 
       :clipped-left="$vuetify.breakpoint.lgAndUp"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
